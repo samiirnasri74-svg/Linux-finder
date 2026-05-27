@@ -11,11 +11,23 @@
     .hidden { display: none !important; }
     @keyframes pulse-slow { 0%, 100% { opacity: 0.3; } 50% { opacity: 0.9; } }
     .pulse-effect { animation: pulse-slow 2s infinite; }
+    
+    .main-container {
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+    }
+    @media (min-width: 768px) {
+      .main-container {
+        display: grid;
+        grid-template-columns: 1fr 2fr;
+        gap: 2rem;
+      }
+    }
   </style>
 </head>
 <body class="bg-[#030712] text-gray-100 min-h-screen selection:bg-purple-500/30">
 
-  <!-- شريط التنقل المتجاوب -->
   <nav class="sticky top-0 z-50 bg-[#070b19]/90 backdrop-blur-md border-b border-gray-800 p-4">
     <div class="max-w-7xl mx-auto flex items-center justify-between">
       <div class="flex items-center gap-2">
@@ -32,16 +44,13 @@
 
   <main class="max-w-7xl mx-auto px-4 py-6 md:py-10 space-y-8">
     
-    <!-- TABS CONTAINER 1: SPECS FINDER -->
     <div id="tab-specs" class="space-y-6">
       <div class="text-center max-w-xl mx-auto space-y-2">
         <h1 class="text-2xl md:text-4xl font-extrabold tracking-tight bg-gradient-to-r from-white to-gray-400 bg-clip-text text-transparent">Distro Architecture Core 💻</h1>
         <p class="text-xs md:text-sm text-gray-400">Specify your bare-metal setup to deploy the optimal kernel architecture.</p>
       </div>
 
-      <!-- نظام المساحات الذكي (لابتوب: جانبين / هاتف: طولي متناسق) -->
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-        <!-- لوحة التحكم بالمدخلات -->
+      <div class="main-container">
         <div class="p-6 rounded-2xl border border-gray-800 bg-[#070b19]/60 space-y-4 h-fit">
           <div>
             <label class="text-xs font-bold text-purple-400 tracking-wider block mb-2">RAM CAPACITY</label>
@@ -53,7 +62,7 @@
             </select>
           </div>
           <div>
-            <label class="text-xs font-bold text-cyan-400 tracking-wider block mb-2">STORAGE MEDIA (القرص)</label>
+            <label class="text-xs font-bold text-cyan-400 tracking-wider block mb-2">STORAGE MEDIA</label>
             <select id="specs-storage" class="w-full p-3 rounded-xl bg-gray-950 border border-gray-800 text-sm text-white outline-none focus:border-cyan-500">
               <option value="SSD" selected>Solid State Drive (SSD)</option>
               <option value="HDD">Mechanical Drive (HDD)</option>
@@ -69,9 +78,7 @@
           <button onclick="startHardwareScan()" class="w-full py-3.5 rounded-xl bg-gradient-to-r from-purple-600 to-indigo-600 text-white font-bold text-sm shadow-lg hover:from-purple-500 hover:to-indigo-500 transition-all active:scale-95">Compile Recommendation 📊</button>
         </div>
 
-        <!-- لوحة المخرجات المبتكرة (الساحرة) -->
-        <div class="md:col-span-2 space-y-4">
-          <!-- شريط الـ Diagnostic الفيك المثير للحماس -->
+        <div class="space-y-4">
           <div id="scan-loader" class="p-6 rounded-2xl border border-purple-500/30 bg-purple-950/10 space-y-3 hidden">
             <div class="flex justify-between text-xs text-purple-400 font-mono">
               <span id="scan-status">> Initializing probe...</span>
@@ -82,7 +89,6 @@
             </div>
           </div>
 
-          <!-- الكروت الفعلية للنتائج -->
           <div class="grid grid-cols-1 sm:grid-cols-2 gap-4" id="specs-output">
             <div class="col-span-full text-center py-16 text-gray-500 text-sm border border-dashed border-gray-800 rounded-2xl bg-[#070b19]/20">
               Awaiting parameters execution. Click 'Compile Recommendation' to query the local database Matrix.
@@ -92,14 +98,13 @@
       </div>
     </div>
 
-    <!-- TABS CONTAINER 2: WORKFLOW MATCHER -->
     <div id="tab-usecase" class="space-y-6 hidden">
       <div class="text-center max-w-xl mx-auto space-y-2">
         <h1 class="text-2xl md:text-3xl font-extrabold tracking-tight">Environmental Vector Alignment 💼</h1>
         <p class="text-xs md:text-sm text-gray-400">Match your ecosystem with your continuous production pipelines.</p>
       </div>
 
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+      <div class="main-container">
         <div class="p-6 rounded-2xl border border-gray-800 bg-[#070b19]/60 space-y-4 h-fit">
           <div>
             <label class="text-xs text-emerald-400 font-bold tracking-wider block mb-2">TARGET WORKLOAD VECTOR</label>
@@ -113,7 +118,7 @@
           <button onclick="analyzeUsecase()" class="w-full py-3.5 rounded-xl bg-emerald-600 text-white font-bold text-sm shadow-lg hover:bg-emerald-500 transition-all active:scale-95">Link Environment ⚙️</button>
         </div>
 
-        <div class="md:col-span-2 grid grid-cols-1 sm:grid-cols-2 gap-4" id="uc-output">
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4" id="uc-output">
           <div class="col-span-full text-center py-16 text-gray-500 text-sm border border-dashed border-gray-800 rounded-2xl bg-[#070b19]/20">
             Select workload environment and run the linker matrix.
           </div>
@@ -121,7 +126,6 @@
       </div>
     </div>
 
-    <!-- TABS CONTAINER 3: HACKER TERMINAL -->
     <div id="tab-explore" class="space-y-6 hidden">
       <div class="max-w-3xl mx-auto rounded-2xl border border-gray-800 bg-gray-950 overflow-hidden shadow-2xl">
         <div class="bg-[#0f172a] px-4 py-2 flex items-center gap-2 border-b border-gray-900">
@@ -151,7 +155,6 @@
 
   </main>
 
-  <!-- MODAL DIALOG MATRIX -->
   <div id="verdict-modal" class="fixed inset-0 z-50 bg-black/85 backdrop-blur-sm flex items-center justify-center p-4 hidden">
     <div class="w-full max-w-md rounded-2xl p-6 border border-gray-800 bg-gray-950 relative shadow-2xl">
       <button onclick="closeModal()" class="absolute right-4 top-4 text-gray-400 hover:text-white p-1 text-base">✕</button>
@@ -165,7 +168,6 @@
   </footer>
 
   <script>
-    // قاعدة البيانات الشاملة التي تأخذ بالحسبان نوع القرص وحجم الذاكرة
     const DATA = [
       { id: "mint", name: "Linux Mint", desc: "Highly optimized for HDDs/SSDs. Perfect Windows transition UI layer.", bg: "from-emerald-600 to-green-500", why: "Because your combination of 4GB RAM runs incredibly stable on Mint's traditional light desktop environment layout." },
       { id: "ubuntu", name: "Ubuntu Linux", desc: "The definitive cloud and production architecture for standard setups.", bg: "from-orange-600 to-amber-500", why: "Your modern SSD storage paired with high capacity RAM will make Ubuntu's GNOME shell fly flawlessly." },
@@ -190,7 +192,6 @@
       document.getElementById('btn-' + tabId).className = "px-3 py-2 rounded-xl bg-purple-600 text-white font-semibold transition-all";
     }
 
-    // خدعة التحميل البصري الساحر
     function startHardwareScan() {
       const loader = document.getElementById('scan-loader');
       const bar = document.getElementById('scan-bar');
@@ -198,7 +199,7 @@
       const status = document.getElementById('scan-status');
       
       loader.classList.remove('hidden');
-      document.getElementById('specs-output').innerHTML = ''; // تفريغ مؤقت
+      document.getElementById('specs-output').innerHTML = '';
       
       let progress = 0;
       const statusPhrases = [
@@ -222,13 +223,12 @@
           clearInterval(interval);
           setTimeout(() => {
             loader.classList.add('hidden');
-            executeHardwareAnalysis(); // إظهار الكروت الحقيقية بعد انتهاء الخدعة البصرية
+            executeHardwareAnalysis();
           }, 400);
         }
       }, 50);
     }
 
-    // معالجة المدخلات بما فيها الـ SSD و الـ HDD بدقة رياضية وبرمجية
     function executeHardwareAnalysis() {
       const ram = document.getElementById('specs-ram').value;
       const storage = document.getElementById('specs-storage').value;
@@ -243,7 +243,7 @@
         } else {
           results = exp === 'Beginner' ? DATA.filter(d => d.id === 'mint') : DATA.filter(d => d.id === 'manjaro');
         }
-      } else { // 8GB & 16GB+
+      } else {
         if (exp === 'Advanced') {
           results = DATA.filter(d => d.id === 'arch' || d.id === 'fedora');
         } else {
@@ -287,7 +287,6 @@
       `).join('');
     }
 
-    // محاكي التيرمينال الحقيقي لزيادة الهيبة للموقع!
     function handleTerminal(e) {
       if (e.key === 'Enter') {
         const input = document.getElementById('terminal-input');
@@ -325,4 +324,9 @@
     function showModal(title, body) {
       document.getElementById('modal-title').innerText = title + " Log Verdict";
       document.getElementById('modal-body').innerText = body;
-      document.getE
+      document.getElementById('verdict-modal').classList.remove('hidden');
+    }
+    function closeModal() { document.getElementById('verdict-modal').classList.add('hidden'); }
+  </script>
+</body>
+</html>
