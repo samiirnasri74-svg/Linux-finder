@@ -9,8 +9,41 @@
   <style>
     body { font-family: 'Space Grotesk', sans-serif; }
     .hidden { display: none !important; }
-    @keyframes pulse-slow { 0%, 100% { opacity: 0.3; } 50% { opacity: 0.9; } }
-    .pulse-effect { animation: pulse-slow 2s infinite; }
+    
+    /* Mesmerizing Cyber-Grid Animated Background */
+    .cyber-bg {
+      background-color: #030712;
+      background-image: 
+        linear-gradient(rgba(99, 102, 241, 0.04) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(99, 102, 241, 0.04) 1px, transparent 1px);
+      background-size: 40px 40px;
+      background-position: center;
+      animation: gridMove 25s linear infinite;
+    }
+    @keyframes gridMove {
+      from { background-position: 0 0; }
+      to { background-position: 40px 80px; }
+    }
+    .ambient-glow {
+      position: fixed;
+      width: 600px;
+      height: 600px;
+      background: radial-gradient(circle, rgba(147, 51, 234, 0.07) 0%, rgba(0,0,0,0) 70%);
+      top: -10%;
+      left: -10%;
+      z-index: -1;
+      pointer-events: none;
+    }
+    .ambient-glow-2 {
+      position: fixed;
+      width: 500px;
+      height: 500px;
+      background: radial-gradient(circle, rgba(6, 182, 212, 0.05) 0%, rgba(0,0,0,0) 70%);
+      bottom: -10%;
+      right: -10%;
+      z-index: -1;
+      pointer-events: none;
+    }
     
     .main-container {
       display: flex;
@@ -26,24 +59,30 @@
     }
   </style>
 </head>
-<body class="bg-[#030712] text-gray-100 min-h-screen selection:bg-purple-500/30">
+<body class="cyber-bg text-gray-100 min-h-screen selection:bg-purple-500/30 relative">
 
-  <nav class="sticky top-0 z-50 bg-[#070b19]/90 backdrop-blur-md border-b border-gray-800 p-4">
+  <!-- Background Ambience Elements -->
+  <div class="ambient-glow"></div>
+  <div class="ambient-glow-2"></div>
+
+  <!-- NAVIGATION BAR -->
+  <nav class="sticky top-0 z-50 bg-[#070b19]/80 backdrop-blur-xl border-b border-gray-800/60 p-4">
     <div class="max-w-7xl mx-auto flex items-center justify-between">
       <div class="flex items-center gap-2">
-        <span class="text-2xl pulse-effect">🐧</span>
+        <span class="text-2xl animate-pulse">🐧</span>
         <span class="text-xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-cyan-400 via-purple-400 to-indigo-500 tracking-wider">Linux Finder</span>
       </div>
       <div class="flex gap-1.5 text-xs md:text-sm">
-        <button onclick="switchTab('specs')" id="btn-specs" class="px-3 py-2 rounded-xl bg-purple-600 text-white font-semibold transition-all">🖥️ Specs</button>
-        <button onclick="switchTab('usecase')" id="btn-usecase" class="px-3 py-2 rounded-xl text-gray-400 font-semibold hover:text-white transition-all">💼 Workflow</button>
-        <button onclick="switchTab('explore')" id="btn-explore" class="px-3 py-2 rounded-xl text-gray-400 font-semibold hover:text-white transition-all">🌍 Terminal</button>
+        <button onclick="switchTab('specs')" id="btn-specs" class="px-4 py-2 rounded-xl bg-purple-600 text-white font-semibold transition-all shadow-md shadow-purple-900/20">🖥️ Specs</button>
+        <button onclick="switchTab('usecase')" id="btn-usecase" class="px-4 py-2 rounded-xl text-gray-400 font-semibold hover:text-white transition-all">💼 Workflow</button>
+        <button onclick="switchTab('explore')" id="btn-explore" class="px-4 py-2 rounded-xl text-gray-400 font-semibold hover:text-white transition-all">🌍 Terminal</button>
       </div>
     </div>
   </nav>
 
   <main class="max-w-7xl mx-auto px-4 py-6 md:py-10 space-y-8">
     
+    <!-- TAB 1: SPECS FINDER -->
     <div id="tab-specs" class="space-y-6">
       <div class="text-center max-w-xl mx-auto space-y-2">
         <h1 class="text-2xl md:text-4xl font-extrabold tracking-tight bg-gradient-to-r from-white to-gray-400 bg-clip-text text-transparent">Distro Architecture Core 💻</h1>
@@ -51,10 +90,11 @@
       </div>
 
       <div class="main-container">
-        <div class="p-6 rounded-2xl border border-gray-800 bg-[#070b19]/60 space-y-4 h-fit">
+        <!-- INPUT CONTROL PANEL -->
+        <div class="p-6 rounded-2xl border border-gray-800 bg-[#070b19]/70 backdrop-blur-md space-y-4 h-fit shadow-xl">
           <div>
             <label class="text-xs font-bold text-purple-400 tracking-wider block mb-2">RAM CAPACITY</label>
-            <select id="specs-ram" class="w-full p-3 rounded-xl bg-gray-950 border border-gray-800 text-sm text-white outline-none focus:border-purple-500">
+            <select id="specs-ram" class="w-full p-3 rounded-xl bg-gray-950 border border-gray-800 text-sm text-white outline-none focus:border-purple-500 cursor-pointer">
               <option value="under-2GB">Under 2GB (Legacy)</option>
               <option value="4GB" selected>4GB (Standard)</option>
               <option value="8GB">8GB (Performance)</option>
@@ -63,14 +103,14 @@
           </div>
           <div>
             <label class="text-xs font-bold text-cyan-400 tracking-wider block mb-2">STORAGE MEDIA</label>
-            <select id="specs-storage" class="w-full p-3 rounded-xl bg-gray-950 border border-gray-800 text-sm text-white outline-none focus:border-cyan-500">
+            <select id="specs-storage" class="w-full p-3 rounded-xl bg-gray-950 border border-gray-800 text-sm text-white outline-none focus:border-cyan-500 cursor-pointer">
               <option value="SSD" selected>Solid State Drive (SSD)</option>
               <option value="HDD">Mechanical Drive (HDD)</option>
             </select>
           </div>
           <div>
             <label class="text-xs font-bold text-indigo-400 tracking-wider block mb-2">USER EXPERIENCE</label>
-            <select id="specs-exp" class="w-full p-3 rounded-xl bg-gray-950 border border-gray-800 text-sm text-white outline-none focus:border-indigo-500">
+            <select id="specs-exp" class="w-full p-3 rounded-xl bg-gray-950 border border-gray-800 text-sm text-white outline-none focus:border-indigo-500 cursor-pointer">
               <option value="Beginner">Beginner / GUI Preferred</option>
               <option value="Advanced">Advanced / TTY Hardcore</option>
             </select>
@@ -78,7 +118,9 @@
           <button onclick="startHardwareScan()" class="w-full py-3.5 rounded-xl bg-gradient-to-r from-purple-600 to-indigo-600 text-white font-bold text-sm shadow-lg hover:from-purple-500 hover:to-indigo-500 transition-all active:scale-95">Compile Recommendation 📊</button>
         </div>
 
+        <!-- OUTPUT PANEL -->
         <div class="space-y-4">
+          <!-- LIVE DIAGNOSTIC SIMULATOR -->
           <div id="scan-loader" class="p-6 rounded-2xl border border-purple-500/30 bg-purple-950/10 space-y-3 hidden">
             <div class="flex justify-between text-xs text-purple-400 font-mono">
               <span id="scan-status">> Initializing probe...</span>
@@ -89,8 +131,9 @@
             </div>
           </div>
 
+          <!-- RECON CARDS TARGET -->
           <div class="grid grid-cols-1 sm:grid-cols-2 gap-4" id="specs-output">
-            <div class="col-span-full text-center py-16 text-gray-500 text-sm border border-dashed border-gray-800 rounded-2xl bg-[#070b19]/20">
+            <div class="col-span-full text-center py-16 text-gray-500 text-sm border border-dashed border-gray-800/80 rounded-2xl bg-[#070b19]/20 backdrop-blur-sm">
               Awaiting parameters execution. Click 'Compile Recommendation' to query the local database Matrix.
             </div>
           </div>
@@ -98,6 +141,7 @@
       </div>
     </div>
 
+    <!-- TAB 2: WORKFLOW MATCHER -->
     <div id="tab-usecase" class="space-y-6 hidden">
       <div class="text-center max-w-xl mx-auto space-y-2">
         <h1 class="text-2xl md:text-3xl font-extrabold tracking-tight">Environmental Vector Alignment 💼</h1>
@@ -105,12 +149,18 @@
       </div>
 
       <div class="main-container">
-        <div class="p-6 rounded-2xl border border-gray-800 bg-[#070b19]/60 space-y-4 h-fit">
+        <!-- INPUT WORKLOAD VECTOR -->
+        <div class="p-6 rounded-2xl border border-gray-800 bg-[#070b19]/70 backdrop-blur-md space-y-4 h-fit shadow-xl">
+          <div class="p-3 bg-purple-950/20 border border-purple-800/30 rounded-xl text-center">
+            <span class="text-[11px] font-mono text-purple-400 block tracking-wider uppercase">Active Hardware Matrix</span>
+            <span class="text-xs font-bold text-gray-300" id="active-hardware-label">Using defaults from Specs tab</span>
+          </div>
           <div>
             <label class="text-xs text-emerald-400 font-bold tracking-wider block mb-2">TARGET WORKLOAD VECTOR</label>
-            <select id="uc-workload" class="w-full p-3 rounded-xl bg-gray-950 border border-gray-800 text-sm text-white outline-none focus:border-emerald-500">
+            <select id="uc-workload" class="w-full p-3 rounded-xl bg-gray-950 border border-gray-800 text-sm text-white outline-none focus:border-emerald-500 cursor-pointer">
               <option value="Programming">Full-Stack Dev & Compilation</option>
               <option value="Cyber Security">Cyber Security, Pentesting & Auditing</option>
+              <option value="Video Editing">Video Editing & Media Rendering 🎬</option>
               <option value="Gaming">Pro Gaming & Wine/Proton Layering</option>
               <option value="General">General SysOps & Micro Browsing</option>
             </select>
@@ -118,16 +168,18 @@
           <button onclick="analyzeUsecase()" class="w-full py-3.5 rounded-xl bg-emerald-600 text-white font-bold text-sm shadow-lg hover:bg-emerald-500 transition-all active:scale-95">Link Environment ⚙️</button>
         </div>
 
+        <!-- WORKFLOW OUTPUT PANEL -->
         <div class="grid grid-cols-1 sm:grid-cols-2 gap-4" id="uc-output">
-          <div class="col-span-full text-center py-16 text-gray-500 text-sm border border-dashed border-gray-800 rounded-2xl bg-[#070b19]/20">
+          <div class="col-span-full text-center py-16 text-gray-500 text-sm border border-dashed border-gray-800/80 rounded-2xl bg-[#070b19]/20 backdrop-blur-sm">
             Select workload environment and run the linker matrix.
           </div>
         </div>
       </div>
     </div>
 
+    <!-- TAB 3: HACKER TERMINAL -->
     <div id="tab-explore" class="space-y-6 hidden">
-      <div class="max-w-3xl mx-auto rounded-2xl border border-gray-800 bg-gray-950 overflow-hidden shadow-2xl">
+      <div class="max-w-3xl mx-auto rounded-2xl border border-gray-800 bg-gray-950/90 backdrop-blur-xl overflow-hidden shadow-2xl">
         <div class="bg-[#0f172a] px-4 py-2 flex items-center gap-2 border-b border-gray-900">
           <div class="w-3 h-3 rounded-full bg-red-500"></div>
           <div class="w-3 h-3 rounded-full bg-yellow-500"></div>
@@ -155,6 +207,7 @@
 
   </main>
 
+  <!-- VERDICT MODAL MATRIX -->
   <div id="verdict-modal" class="fixed inset-0 z-50 bg-black/85 backdrop-blur-sm flex items-center justify-center p-4 hidden">
     <div class="w-full max-w-md rounded-2xl p-6 border border-gray-800 bg-gray-950 relative shadow-2xl">
       <button onclick="closeModal()" class="absolute right-4 top-4 text-gray-400 hover:text-white p-1 text-base">✕</button>
@@ -184,12 +237,22 @@
       document.getElementById('tab-usecase').classList.add('hidden');
       document.getElementById('tab-explore').classList.add('hidden');
       
-      document.getElementById('btn-specs').className = "px-3 py-2 rounded-xl text-gray-400 font-semibold hover:text-white transition-all";
-      document.getElementById('btn-usecase').className = "px-3 py-2 rounded-xl text-gray-400 font-semibold hover:text-white transition-all";
-      document.getElementById('btn-explore').className = "px-3 py-2 rounded-xl text-gray-400 font-semibold hover:text-white transition-all";
+      document.getElementById('btn-specs').className = "px-4 py-2 rounded-xl text-gray-400 font-semibold hover:text-white transition-all";
+      document.getElementById('btn-usecase').className = "px-4 py-2 rounded-xl text-gray-400 font-semibold hover:text-white transition-all";
+      document.getElementById('btn-explore').className = "px-4 py-2 rounded-xl text-gray-400 font-semibold hover:text-white transition-all";
 
       document.getElementById('tab-' + tabId).classList.remove('hidden');
-      document.getElementById('btn-' + tabId).className = "px-3 py-2 rounded-xl bg-purple-600 text-white font-semibold transition-all";
+      document.getElementById('btn-' + tabId).className = "px-4 py-2 rounded-xl bg-purple-600 text-white font-semibold transition-all shadow-md shadow-purple-900/20";
+      
+      if(tabId === 'usecase') {
+        updateHardwareLabel();
+      }
+    }
+
+    function updateHardwareLabel() {
+      const ram = document.getElementById('specs-ram').value;
+      const storage = document.getElementById('specs-storage').value;
+      document.getElementById('active-hardware-label').innerText = `${ram} RAM | ${storage} Target Drive`;
     }
 
     function startHardwareScan() {
@@ -226,7 +289,7 @@
             executeHardwareAnalysis();
           }, 400);
         }
-      }, 50);
+      }, 40);
     }
 
     function executeHardwareAnalysis() {
@@ -253,7 +316,7 @@
 
       const container = document.getElementById('specs-output');
       container.innerHTML = results.map(d => `
-        <div class="p-5 rounded-xl border border-gray-800 bg-[#070b19]/40 flex flex-col justify-between shadow-lg hover:border-purple-500/40 transition-all group">
+        <div class="p-5 rounded-xl border border-gray-800 bg-[#070b19]/40 backdrop-blur-sm flex flex-col justify-between shadow-lg hover:border-purple-500/40 transition-all group">
           <div>
             <span class="px-2.5 py-1 rounded-lg text-xs font-bold text-white bg-gradient-to-r ${d.bg} tracking-wide">${d.name}</span>
             <p class="text-xs text-gray-400 mt-4 leading-relaxed font-mono">${d.desc}</p>
@@ -265,68 +328,21 @@
 
     function analyzeUsecase() {
       const workload = document.getElementById('uc-workload').value;
+      const ram = document.getElementById('specs-ram').value;
+      const storage = document.getElementById('specs-storage').value;
+      
       let results = [];
+      let hardwareNote = "";
 
-      if (workload === 'Cyber Security') results = DATA.filter(d => d.id === 'kali');
-      else if (workload === 'Programming') results = DATA.filter(d => d.id === 'ubuntu' || d.id === 'fedora' || d.id === 'arch');
-      else if (workload === 'Gaming') results = DATA.filter(d => d.id === 'manjaro');
-      else results = DATA.filter(d => d.id === 'mint');
-
-      const container = document.getElementById('uc-output');
-      container.innerHTML = results.map(d => `
-        <div class="p-5 rounded-xl border border-gray-800 bg-[#070b19]/40 flex flex-col justify-between hover:border-emerald-500/30 transition-all">
-          <div>
-            <span class="px-2.5 py-1 rounded-lg text-xs font-bold text-white bg-gradient-to-r ${d.bg}">${d.name}</span>
-            <p class="text-xs text-gray-400 mt-3 leading-relaxed font-mono">${d.desc}</p>
-          </div>
-          <div class="mt-4 pt-3 border-t border-gray-800/60 text-[11px] text-emerald-400 font-mono flex items-center justify-between">
-            <span>[Link status: Secure]</span>
-            <span>Target: ${workload}</span>
-          </div>
-        </div>
-      `).join('');
-    }
-
-    function handleTerminal(e) {
-      if (e.key === 'Enter') {
-        const input = document.getElementById('terminal-input');
-        const cmd = input.value.toLowerCase().trim();
-        const history = document.getElementById('terminal-history');
-        
-        let reply = '';
-        if (cmd === 'help') {
-          reply = `<p class="text-gray-400">Available cores: 'neofetch' | 'clear' | 'sudo rm -rf' | 'whoami'</p>`;
-        } else if (cmd === 'neofetch') {
-          reply = `
-            <p class="text-cyan-400">██████████████████  <span class="text-white font-bold">OS:</span> Linux Finder OS</p>
-            <p class="text-cyan-400">██████████████████  <span class="text-white font-bold">Host:</span> GitHub Pages Server</p>
-            <p class="text-cyan-400">██████████████████  <span class="text-white font-bold">Maintainer:</span> Nasreddine 👑</p>
-          `;
-        } else if (cmd === 'sudo rm -rf') {
-          reply = `<p class="text-red-400">Permission denied. Nice try, hacker boy! 😉</p>`;
-        } else if (cmd === 'whoami') {
-          reply = `<p class="text-purple-400">An elite user exploring Nasreddine's masterwork portfolio.</p>`;
-        } else if (cmd === 'clear') {
-          history.innerHTML = '';
-          input.value = '';
-          return;
-        } else if (cmd !== '') {
-          reply = `<p class="text-red-500">Command not found: ${cmd}. Type 'help' for options.</p>`;
-        }
-        
-        if (cmd !== '') {
-          history.innerHTML += `<p><span class="text-purple-400">guest@linuxfinder:~$</span> ${input.value}</p>${reply}`;
-        }
-        input.value = '';
-      }
-    }
-
-    function showModal(title, body) {
-      document.getElementById('modal-title').innerText = title + " Log Verdict";
-      document.getElementById('modal-body').innerText = body;
-      document.getElementById('verdict-modal').classList.remove('hidden');
-    }
-    function closeModal() { document.getElementById('verdict-modal').classList.add('hidden'); }
-  </script>
-</body>
-</html>
+      // Smart logic blending Usecase + Hardware Matrix values seamlessly
+      if (workload === 'Cyber Security') {
+        results = DATA.filter(d => d.id === 'kali');
+        hardwareNote = storage === 'HDD' ? "Warning: Pentesting database searches will feel bottlenecked on your selected HDD storage." : "Excellent choice! Live sandboxing scales perfectly on an SSD configuration.";
+      } 
+      else if (workload === 'Video Editing') {
+        if (ram === 'under-2GB' || ram === '4GB') {
+          results = DATA.filter(d => d.id === 'mint');
+          hardwareNote = "Alert: Video editing demands massive swap memory space. With low RAM, Mint XFCE / Kdenlive proxy rendering is suggested to avoid system crashes.";
+        } else {
+          results = DATA.filter(d => d.id === 'fedora' || d.id === 'ubuntu');
+          hardwareNote = "Optimal! High RAM allows multi-track DaVinci Resolve or Blender execution paths.";
