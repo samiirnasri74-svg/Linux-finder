@@ -12,49 +12,60 @@
   <style>
     body { font-family: 'Plus Jakarta Sans', sans-serif; }
     .font-space { font-family: 'Space Grotesk', sans-serif; }
-    .tab-active { bg-color: #9333ea; color: white; }
-    .hidden { display: none; }
+    .hidden { display: none !important; }
   </style>
 </head>
 <body class="bg-[#030712] text-gray-100 min-h-screen transition-colors duration-300" id="body-element">
 
-  <!-- شريط التنقل -->
+  <!-- شريط التنقل المتجاوب (لابتوب وهاتف) -->
   <nav class="sticky top-0 z-50 backdrop-blur-md border-b bg-[#030712]/80 border-gray-800" id="nav-element">
     <div class="max-w-7xl mx-auto px-4 h-16 flex items-center justify-between">
       <div class="flex items-center gap-2">
         <span class="text-2xl">🐧</span>
         <span class="font-space text-xl font-black tracking-tight bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-purple-500">Linux Finder</span>
       </div>
+      
+      <!-- أزرار اللابتوب (تختفي في الشاشات الصغيرة) -->
       <div class="hidden md:flex items-center gap-2">
         <button onclick="switchTab('specs')" id="btn-specs" class="px-4 py-2 rounded-xl text-sm font-semibold bg-purple-600 text-white">🖥️ Specs Finder</button>
-        <button onclick="switchTab('usecase')" id="btn-usecase" class="px-4 py-2 rounded-xl text-sm font-semibold text-gray-400">💼 Workflow Matcher</button>
-        <button onclick="switchTab('explore')" id="btn-explore" class="px-4 py-2 rounded-xl text-sm font-semibold text-gray-400">🌍 Explore World</button>
+        <button onclick="switchTab('usecase')" id="btn-usecase" class="px-4 py-2 rounded-xl text-sm font-semibold text-gray-400 hover:text-white">💼 Workflow Matcher</button>
+        <button onclick="switchTab('explore')" id="btn-explore" class="px-4 py-2 rounded-xl text-sm font-semibold text-gray-400 hover:text-white">🌍 Explore World</button>
       </div>
+      
       <button onclick="toggleTheme()" class="p-2 rounded-xl border border-gray-800" id="theme-btn">☀️</button>
+    </div>
+
+    <!-- أزرار الهاتف السفليّة أو الإضافية للتنقل السريع (تظهر في الهواتف فقط لجعل التصفح أسهل) -->
+    <div class="flex md:hidden border-t border-gray-800/60 bg-gray-950/80 justify-around py-2 text-xs">
+      <button onclick="switchTab('specs')" id="m-btn-specs" class="text-purple-400 font-bold flex flex-col items-center gap-1"><span>🖥️</span><span>Specs</span></button>
+      <button onclick="switchTab('usecase')" id="m-btn-usecase" class="text-gray-400 flex flex-col items-center gap-1"><span>💼</span><span>Workflow</span></button>
+      <button onclick="switchTab('explore')" id="m-btn-explore" class="text-gray-400 flex flex-col items-center gap-1"><span>🌍</span><span>Explore</span></button>
     </div>
   </nav>
 
-  <main class="max-w-7xl mx-auto px-4 py-10 space-y-12">
+  <main class="max-w-7xl mx-auto px-4 py-6 md:py-10 space-y-8 md:space-y-12">
     <!-- لوحة البحث السريع -->
-    <section class="rounded-3xl p-6 border bg-gray-950/40 border-gray-800" id="search-section">
+    <section class="rounded-2xl md:rounded-3xl p-4 md:p-6 border bg-gray-950/40 border-gray-800" id="search-section">
       <div class="max-w-xl mx-auto text-center space-y-3">
-        <h3 class="text-xl font-bold">Looking for a Specific Distribution? 🔍</h3>
-        <input type="text" id="search-input" oninput="handleSearch()" placeholder="Type 'Ubuntu', 'Arch', 'Mint'..." class="w-full py-2.5 px-4 rounded-xl border bg-transparent text-center outline-none border-gray-700 focus:border-purple-500"/>
+        <h3 class="text-lg md:text-xl font-bold">Looking for a Specific Distribution? 🔍</h3>
+        <input type="text" id="search-input" oninput="handleSearch()" placeholder="Type 'Ubuntu', 'Arch', 'Mint'..." class="w-full py-2.5 px-4 rounded-xl border bg-transparent text-center outline-none border-gray-700 focus:border-purple-500 text-sm"/>
       </div>
-      <div id="search-results" class="grid grid-cols-1 md:grid-cols-3 gap-4 mt-6 hidden"></div>
+      <div id="search-results" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 mt-6 hidden"></div>
     </section>
 
     <!-- تبويب المواصفات -->
-    <div id="tab-specs" class="space-y-8">
+    <div id="tab-specs" class="space-y-6 md:space-y-8">
       <div class="text-center max-w-2xl mx-auto">
-        <h1 class="text-3xl font-extrabold font-space mb-2">Find The Perfect Linux Distro For Your PC 💻</h1>
-        <p class="text-sm text-gray-400">Answer a few questions and we'll recommend the best Linux distribution for your hardware.</p>
+        <h1 class="text-2xl md:text-3xl font-extrabold font-space mb-2">Find The Perfect Linux Distro For Your PC 💻</h1>
+        <p class="text-xs md:text-sm text-gray-400">Answer a few questions and we'll recommend the best Linux distribution for your hardware.</p>
       </div>
-      <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
-        <div class="p-6 rounded-3xl border bg-gray-950/60 border-gray-800 space-y-6">
+      
+      <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 md:gap-8">
+        <!-- الخيارات -->
+        <div class="p-5 md:p-6 rounded-2xl md:rounded-3xl border bg-gray-950/60 border-gray-800 space-y-4 md:space-y-6 h-fit">
           <div>
             <label class="text-xs font-bold text-purple-400 block mb-2">RAM SIZE</label>
-            <select id="specs-ram" class="w-full p-2.5 rounded-xl bg-gray-900 border border-gray-700 text-sm text-white">
+            <select id="specs-ram" class="w-full p-2.5 rounded-xl bg-gray-900 border border-gray-700 text-sm text-white outline-none focus:border-purple-500">
               <option value="under-2GB">Under 2GB</option>
               <option value="4GB" selected>4GB</option>
               <option value="8GB">8GB</option>
@@ -63,37 +74,39 @@
           </div>
           <div>
             <label class="text-xs font-bold text-purple-400 block mb-2">STORAGE TYPE</label>
-            <select id="specs-storage" class="w-full p-2.5 rounded-xl bg-gray-900 border border-gray-700 text-sm text-white">
+            <select id="specs-storage" class="w-full p-2.5 rounded-xl bg-gray-900 border border-gray-700 text-sm text-white outline-none focus:border-purple-500">
               <option value="SSD" selected>SSD</option>
               <option value="HDD">HDD</option>
             </select>
           </div>
           <div>
             <label class="text-xs font-bold text-purple-400 block mb-2">EXPERIENCE</label>
-            <select id="specs-exp" class="w-full p-2.5 rounded-xl bg-gray-900 border border-gray-700 text-sm text-white">
+            <select id="specs-exp" class="w-full p-2.5 rounded-xl bg-gray-900 border border-gray-700 text-sm text-white outline-none focus:border-purple-500">
               <option value="Beginner" selected>Beginner Friendly</option>
               <option value="Advanced">Advanced User</option>
             </select>
           </div>
-          <button onclick="analyzeSpecs()" class="w-full py-3 rounded-xl bg-purple-600 text-white font-bold text-sm shadow-lg hover:bg-purple-500">Analyze Specs 📊</button>
+          <button onclick="analyzeSpecs()" class="w-full py-3 rounded-xl bg-purple-600 text-white font-bold text-sm shadow-lg hover:bg-purple-500 transition-all">Analyze Specs 📊</button>
         </div>
-        <div class="lg:col-span-2 grid grid-cols-1 md:grid-cols-2 gap-4" id="specs-output">
-          <div class="col-span-2 text-center py-12 text-gray-500 text-sm">Fill parameters and press Analyze.</div>
+        
+        <!-- مخرجات كروت المواصفات -->
+        <div class="lg:col-span-2 grid grid-cols-1 sm:grid-cols-2 gap-4" id="specs-output">
+          <div class="col-span-1 sm:col-span-2 text-center py-12 text-gray-500 text-sm border border-dashed border-gray-800 rounded-2xl">Fill parameters and press Analyze.</div>
         </div>
       </div>
     </div>
 
     <!-- تبويب الاستخدام -->
-    <div id="tab-usecase" class="space-y-8 hidden">
+    <div id="tab-usecase" class="space-y-6 md:space-y-8 hidden">
       <div class="text-center max-w-2xl mx-auto">
-        <h1 class="text-3xl font-extrabold font-space mb-2">What Do You Use Your Computer For? 💼</h1>
-        <p class="text-sm text-gray-400">Select your workflow fields to unlock the tailored pre-installed toolsets.</p>
+        <h1 class="text-2xl md:text-3xl font-extrabold font-space mb-2">What Do You Use Your Computer For? 💼</h1>
+        <p class="text-xs md:text-sm text-gray-400">Select your workflow fields to unlock the tailored pre-installed toolsets.</p>
       </div>
-      <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
-        <div class="p-6 rounded-3xl border border-gray-800 bg-gray-950/60 space-y-4">
+      <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 md:gap-8">
+        <div class="p-5 md:p-6 rounded-2xl md:rounded-3xl border border-gray-800 bg-gray-950/60 space-y-4 h-fit">
           <div>
-            <label class="text-xs text-emerald-400 font-bold block mb-1">WORKLOAD</label>
-            <select id="uc-workload" class="w-full p-2 rounded-xl bg-gray-900 border border-gray-700 text-xs text-white">
+            <label class="text-xs text-emerald-400 font-bold block mb-2">WORKLOAD</label>
+            <select id="uc-workload" class="w-full p-2.5 rounded-xl bg-gray-900 border border-gray-700 text-sm text-white outline-none focus:border-emerald-500">
               <option value="Programming" selected>Programming</option>
               <option value="Browsing">Browsing</option>
               <option value="Video Editing & Photography">Video Editing & Photography</option>
@@ -102,24 +115,24 @@
               <option value="General Daily Use">General Daily Use</option>
             </select>
           </div>
-          <button onclick="analyzeUsecase()" class="w-full py-2.5 rounded-xl bg-emerald-600 text-white font-bold text-xs uppercase shadow-lg">Build Environment ⚙️</button>
+          <button onclick="analyzeUsecase()" class="w-full py-3 rounded-xl bg-emerald-600 text-white font-bold text-sm uppercase shadow-lg hover:bg-emerald-500 transition-all">Build Environment ⚙️</button>
         </div>
-        <div class="lg:col-span-2 grid grid-cols-1 md:grid-cols-2 gap-4" id="uc-output">
-          <div class="col-span-2 text-center py-12 text-gray-500 text-sm">Select workload type to configure workspace cards.</div>
+        <div class="lg:col-span-2 grid grid-cols-1 sm:grid-cols-2 gap-4" id="uc-output">
+          <div class="col-span-1 sm:col-span-2 text-center py-12 text-gray-500 text-sm border border-dashed border-gray-800 rounded-2xl">Select workload type to configure workspace cards.</div>
         </div>
       </div>
     </div>
 
     <!-- تبويب الاستكشاف والتعليقات -->
-    <div id="tab-explore" class="space-y-12 hidden">
-      <section class="grid grid-cols-1 md:grid-cols-3 gap-4">
-        <div class="p-5 rounded-2xl border border-rose-500/20 bg-rose-950/5"><h4 class="font-bold text-sm">Debian-based</h4><p class="text-xs text-gray-400 mt-1">Rock solid reliability. Built for general everyday stability.</p></div>
-        <div class="p-5 rounded-2xl border border-cyan-500/20 bg-cyan-950/5"><h4 class="font-bold text-sm">Arch-based</h4><p class="text-xs text-gray-400 mt-1">Rolling releases. Supreme customizability and DIY code setup.</p></div>
-        <div class="p-5 rounded-2xl border border-indigo-500/20 bg-indigo-950/5"><h4 class="font-bold text-sm">Red Hat-based</h4><p class="text-xs text-gray-400 mt-1">Enterprise workstations optimized for container developers and sysadmins.</p></div>
+    <div id="tab-explore" class="space-y-8 md:space-y-12 hidden">
+      <section class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
+        <div class="p-5 rounded-2xl border border-rose-500/20 bg-rose-950/5"><h4 class="font-bold text-sm text-rose-400">Debian-based</h4><p class="text-xs text-gray-400 mt-1">Rock solid reliability. Built for general everyday stability.</p></div>
+        <div class="p-5 rounded-2xl border border-cyan-500/20 bg-cyan-950/5"><h4 class="font-bold text-sm text-cyan-400">Arch-based</h4><p class="text-xs text-gray-400 mt-1">Rolling releases. Supreme customizability and DIY code setup.</p></div>
+        <div class="p-5 rounded-2xl border border-indigo-500/20 bg-indigo-950/5"><h4 class="font-bold text-sm text-indigo-400">Red Hat-based</h4><p class="text-xs text-gray-400 mt-1">Enterprise workstations optimized for container developers and sysadmins.</p></div>
       </section>
 
-      <section class="p-6 rounded-3xl border border-gray-800 bg-gray-950/40 flex items-center gap-4">
-        <div class="text-3xl">👑</div>
+      <section class="p-5 md:p-6 rounded-2xl md:rounded-3xl border border-gray-800 bg-gray-950/40 flex flex-col sm:flex-row items-center gap-4 text-center sm:text-left">
+        <div class="text-4xl">👑</div>
         <div>
           <h3 class="font-bold text-lg">About Me: Nasreddine</h3>
           <p class="text-xs text-gray-400 leading-relaxed mt-1">Linux enthusiast passionate about helping people discover the perfect distro for their hardware constraints and privacy needs.</p>
@@ -127,21 +140,21 @@
       </section>
 
       <section class="grid grid-cols-1 lg:grid-cols-3 gap-6">
-        <div class="p-5 rounded-2xl border border-gray-800 bg-gray-950/60 space-y-3">
+        <div class="p-5 rounded-2xl border border-gray-800 bg-gray-950/60 space-y-3 h-fit">
           <h4 class="text-sm font-bold">Write a Quick Review 📝</h4>
-          <input type="text" id="rev-name" placeholder="Your name" class="w-full p-2 rounded-lg bg-gray-900 border border-gray-700 text-xs text-white"/>
-          <textarea id="rev-comment" placeholder="Comment" class="w-full p-2 rounded-lg bg-gray-900 border border-gray-700 text-xs text-white" rows="2"></textarea>
-          <button onclick="addReview()" class="w-full py-1.5 rounded-lg bg-purple-600 text-white text-xs font-bold">Submit</button>
+          <input type="text" id="rev-name" placeholder="Your name" class="w-full p-2.5 rounded-lg bg-gray-900 border border-gray-700 text-xs text-white outline-none focus:border-purple-500"/>
+          <textarea id="rev-comment" placeholder="Comment" class="w-full p-2.5 rounded-lg bg-gray-900 border border-gray-700 text-xs text-white outline-none focus:border-purple-500" rows="2"></textarea>
+          <button onclick="addReview()" class="w-full py-2 rounded-lg bg-purple-600 text-white text-xs font-bold hover:bg-purple-500 transition-all">Submit</button>
         </div>
-        <div class="lg:col-span-2 grid grid-cols-1 md:grid-cols-2 gap-4" id="reviews-output"></div>
+        <div class="lg:col-span-2 grid grid-cols-1 sm:grid-cols-2 gap-4" id="reviews-output"></div>
       </section>
     </div>
   </main>
 
   <!-- النافذة المنبثقة (Modal) -->
-  <div id="verdict-modal" class="fixed inset-0 z-50 bg-black/70 backdrop-blur-sm flex items-center justify-center p-4 hidden">
-    <div class="w-full max-w-md rounded-2xl p-5 border border-gray-800 bg-gray-950 relative">
-      <button onclick="closeModal()" class="absolute right-4 top-4 text-sm text-gray-400 hover:text-white">✕</button>
+  <div id="verdict-modal" class="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm flex items-center justify-center p-4 hidden">
+    <div class="w-full max-w-md rounded-2xl p-5 border border-gray-800 bg-gray-950 relative shadow-2xl">
+      <button onclick="closeModal()" class="absolute right-4 top-4 text-sm text-gray-400 hover:text-white p-1">✕</button>
       <h3 class="text-lg font-bold text-purple-400 mb-2" id="modal-title">Verdict</h3>
       <p class="text-xs text-gray-300 leading-relaxed" id="modal-body"></p>
     </div>
@@ -152,7 +165,7 @@
   </footer>
 
   <script>
-    // قاعدة البيانات الثابتة
+    // قاعدة البيانات
     const DISTROS_DATABASE = [
       { id: "mint", name: "Linux Mint", base: "Debian/Ubuntu", bestFor: "General Daily Use & Beginners", description: "The absolute gold standard for beginners transitioning from Windows. Highly familiar desktop layout and rock-solid stability.", iconBg: "from-emerald-600 to-green-500", whyThis: "Because your device has enough resources to run a highly polished modern layout with zero headache." },
       { id: "ubuntu", name: "Ubuntu", base: "Debian", bestFor: "Programming & Everyday Use", description: "The world's most popular Linux distribution. Widely used by enterprise developers and industry standards.", iconBg: "from-orange-600 to-amber-500", whyThis: "Because Ubuntu provides the absolute best environment for standard modern programming workflows." },
@@ -173,21 +186,29 @@
       { name: "Sarah A.", comment: "Very clean and useful website. The UI design is amazing!", date: "April 2026" }
     ];
 
-    // تبديل التبويبات
+    // تبديل التبويبات المتجاوب بالكامل
     function switchTab(tabId) {
       document.getElementById('tab-specs').classList.add('hidden');
       document.getElementById('tab-usecase').classList.add('hidden');
       document.getElementById('tab-explore').classList.add('hidden');
       
-      document.getElementById('btn-specs').className = "px-4 py-2 rounded-xl text-sm font-semibold text-gray-400";
-      document.getElementById('btn-usecase').className = "px-4 py-2 rounded-xl text-sm font-semibold text-gray-400";
-      document.getElementById('btn-explore').className = "px-4 py-2 rounded-xl text-sm font-semibold text-gray-400";
+      // أزرار اللابتوب
+      document.getElementById('btn-specs').className = "px-4 py-2 rounded-xl text-sm font-semibold text-gray-400 hover:text-white";
+      document.getElementById('btn-usecase').className = "px-4 py-2 rounded-xl text-sm font-semibold text-gray-400 hover:text-white";
+      document.getElementById('btn-explore').className = "px-4 py-2 rounded-xl text-sm font-semibold text-gray-400 hover:text-white";
 
+      // أزرار الهاتف
+      document.getElementById('m-btn-specs').className = "text-gray-400 flex flex-col items-center gap-1";
+      document.getElementById('m-btn-usecase').className = "text-gray-400 flex flex-col items-center gap-1";
+      document.getElementById('m-btn-explore').className = "text-gray-400 flex flex-col items-center gap-1";
+
+      // تفعيل التبويب المختار
       document.getElementById('tab-' + tabId).classList.remove('hidden');
       document.getElementById('btn-' + tabId).className = "px-4 py-2 rounded-xl text-sm font-semibold bg-purple-600 text-white";
+      document.getElementById('m-btn-' + tabId).className = "text-purple-400 font-bold flex flex-col items-center gap-1";
     }
 
-    // البحث السريع
+    // محرك البحث السريع
     function handleSearch() {
       const query = document.getElementById('search-input').value.toLowerCase().trim();
       const container = document.getElementById('search-results');
@@ -205,86 +226,37 @@
       `).join('');
     }
 
-    // تحليل المواصفات
+    // إصلاح وعمل دالة تحليل المواصفات
     function analyzeSpecs() {
       const ram = document.getElementById('specs-ram').value;
       const exp = document.getElementById('specs-exp').value;
       let res = [];
 
-      if (ram === 'under-2GB') res = DISTROS_DATABASE.filter(d => d.id === 'lubuntu' || d.id === 'lite');
-      else if (ram === '4GB') res = exp === 'Beginner' ? DISTROS_DATABASE.filter(d => d.id === 'mint' || d.id === 'zorin') : DISTROS_DATABASE.filter(d => d.id === 'manjaro' || d.id === 'fedora');
-      else res = exp === 'Beginner' ? DISTROS_DATABASE.filter(d => d.id === 'ubuntu' || d.id === 'mint') : DISTROS_DATABASE.filter(d => d.id === 'arch' || d.id === 'fedora');
+      if (ram === 'under-2GB') {
+        res = DISTROS_DATABASE.filter(d => d.id === 'lubuntu' || d.id === 'lite');
+      } else if (ram === '4GB') {
+        res = exp === 'Beginner' ? DISTROS_DATABASE.filter(d => d.id === 'mint' || d.id === 'zorin') : DISTROS_DATABASE.filter(d => d.id === 'manjaro' || d.id === 'fedora');
+      } else {
+        res = exp === 'Beginner' ? DISTROS_DATABASE.filter(d => d.id === 'ubuntu' || d.id === 'mint') : DISTROS_DATABASE.filter(d => d.id === 'arch' || d.id === 'fedora');
+      }
 
       const output = document.getElementById('specs-output');
       output.innerHTML = res.map(d => `
-        <div class="p-5 rounded-2xl border border-gray-800 bg-gray-900/20 flex flex-col justify-between">
+        <div class="p-5 rounded-xl border border-gray-800 bg-gray-900/20 flex flex-col justify-between shadow-sm">
           <div>
-            <span class="px-2.5 py-0.5 rounded text-xs font-bold text-white bg-gradient-to-r ${d.iconBg}">${d.name}</span>
+            <span class="px-2.5 py-1 rounded text-xs font-bold text-white bg-gradient-to-r ${d.iconBg}">${d.name}</span>
             <p class="text-xs text-gray-400 mt-3 leading-relaxed">${d.description}</p>
           </div>
-          <button onclick="showModal('${d.name}', '${d.whyThis}')" class="mt-4 w-full py-1.5 rounded-lg bg-purple-500/10 text-purple-400 text-xs font-bold">Why this distro? 💡</button>
+          <button onclick="showModal('${d.name}', '${d.whyThis}')" class="mt-4 w-full py-2 rounded-lg bg-purple-500/10 text-purple-400 text-xs font-bold hover:bg-purple-500/20 transition-all">Why this distro? 💡</button>
         </div>
       `).join('');
     }
 
-    // تحليل نوع الاستخدام
+    // إصلاح وعمل دالة تحليل الاستخدام
     function analyzeUsecase() {
       const workload = document.getElementById('uc-workload').value;
       let res = [];
 
       if (workload === 'Cyber Security') res = DISTROS_DATABASE.filter(d => d.id === 'kali' || d.id === 'parrot');
       else if (workload === 'Video Editing & Photography') res = DISTROS_DATABASE.filter(d => d.id === 'ustudio');
-      else if (workload === 'Programming') res = DISTROS_DATABASE.filter(d => d.id === 'arch' || d.id === 'fedora' || d.id === 'ubuntu');
-      else if (workload === 'Gaming') res = DISTROS_DATABASE.filter(d => d.id === 'manjaro' || d.id === 'ubuntu');
-      else res = DISTROS_DATABASE.filter(d => d.id === 'mint' || d.id === 'zorin');
-
-      const output = document.getElementById('uc-output');
-      output.innerHTML = res.map(d => `
-        <div class="p-5 rounded-2xl border border-gray-800 bg-gray-900/30">
-          <span class="px-2 py-0.5 rounded text-xs font-bold text-white bg-gradient-to-r ${d.iconBg}">${d.name}</span>
-          <p class="text-xs text-gray-400 mt-2">${d.description}</p>
-          <div class="mt-3 pt-3 border-t border-gray-800/40 flex justify-between text-[11px] text-gray-500">
-            <span>Target: ${d.bestFor}</span>
-          </div>
-        </div>
-      `).join('');
-    }
-
-    // النوافذ المنبثقة
-    function showModal(title, body) {
-      document.getElementById('modal-title').innerText = title + " Verdict";
-      document.getElementById('modal-body').innerText = body;
-      document.getElementById('verdict-modal').classList.remove('hidden');
-    }
-    function closeModal() { document.getElementById('verdict-modal').classList.add('hidden'); }
-
-    // إدارة مراجعات المستخدمين
-    function renderReviews() {
-      const out = document.getElementById('reviews-output');
-      out.innerHTML = reviews.map(r => `
-        <div class="p-4 rounded-xl border border-gray-800 bg-gray-900/10 text-xs">
-          <div class="flex justify-between font-bold text-gray-400"><span>${r.name}</span><span>${r.date}</span></div>
-          <p class="text-gray-400 mt-2">"${r.comment}"</p>
-        </div>
-      `).join('');
-    }
-    function addReview() {
-      const name = document.getElementById('rev-name').value.trim();
-      const comment = document.getElementById('rev-comment').value.trim();
-      if(name && comment) {
-        reviews.unshift({ name, comment, date: "Today" });
-        document.getElementById('rev-name').value = '';
-        document.getElementById('rev-comment').value = '';
-        renderReviews();
-      }
-    }
-
-    // إدارة الثيمات (مظلم / مضيء)
-    function toggleTheme() {
-      const body = document.getElementById('body-element');
-      const nav = document.getElementById('nav-element');
-      const btn = document.getElementById('theme-btn');
-      
-      if(currentTheme === 'dark') {
-        currentTheme = 'light';
-        body.className = "bg-slat
+      else if (workload === 'Programming') res = DISTROS_DATABASE.filter(d => d.id === 'arch' ||
