@@ -4,224 +4,325 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Linux Finder - Nasreddine</title>
-  <!-- جلب Tailwind CSS -->
   <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;600;700&display=swap" rel="stylesheet">
   <style>
-    /* تنسيق المساحات المرن للشاشات */
-    .main-container {
-      display: flex;
-      flex-direction: column;
-      gap: 1.5rem;
-    }
-    @media (min-width: 768px) {
-      .main-container {
-        display: grid;
-        grid-template-columns: 1fr 2fr;
-        gap: 2rem;
-      }
-    }
+    body { font-family: 'Space Grotesk', sans-serif; }
     .hidden { display: none !important; }
+    @keyframes pulse-slow { 0%, 100% { opacity: 0.3; } 50% { opacity: 0.9; } }
+    .pulse-effect { animation: pulse-slow 2s infinite; }
   </style>
 </head>
-<body class="bg-[#030712] text-gray-100 min-h-screen font-sans">
+<body class="bg-[#030712] text-gray-100 min-h-screen selection:bg-purple-500/30">
 
-  <!-- شريط التنقل العلوي الذكي -->
-  <nav class="sticky top-0 z-50 bg-[#070b19] border-b border-gray-800 p-4">
+  <!-- شريط التنقل المتجاوب -->
+  <nav class="sticky top-0 z-50 bg-[#070b19]/90 backdrop-blur-md border-b border-gray-800 p-4">
     <div class="max-w-7xl mx-auto flex items-center justify-between">
       <div class="flex items-center gap-2">
-        <span class="text-2xl">🐧</span>
-        <span class="text-xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-purple-500">Linux Finder</span>
+        <span class="text-2xl pulse-effect">🐧</span>
+        <span class="text-xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-cyan-400 via-purple-400 to-indigo-500 tracking-wider">Linux Finder</span>
       </div>
-      <!-- أزرار التنقل -->
-      <div class="flex gap-2 text-xs md:text-sm">
-        <button onclick="switchTab('specs')" id="btn-specs" class="px-3 py-1.5 rounded-lg bg-purple-600 text-white font-semibold">🖥️ Specs</button>
-        <button onclick="switchTab('usecase')" id="btn-usecase" class="px-3 py-1.5 rounded-lg text-gray-400 font-semibold hover:text-white">💼 Workflow</button>
-        <button onclick="switchTab('explore')" id="btn-explore" class="px-3 py-1.5 rounded-lg text-gray-400 font-semibold hover:text-white">🌍 Explore</button>
+      <div class="flex gap-1.5 text-xs md:text-sm">
+        <button onclick="switchTab('specs')" id="btn-specs" class="px-3 py-2 rounded-xl bg-purple-600 text-white font-semibold transition-all">🖥️ Specs</button>
+        <button onclick="switchTab('usecase')" id="btn-usecase" class="px-3 py-2 rounded-xl text-gray-400 font-semibold hover:text-white transition-all">💼 Workflow</button>
+        <button onclick="switchTab('explore')" id="btn-explore" class="px-3 py-2 rounded-xl text-gray-400 font-semibold hover:text-white transition-all">🌍 Terminal</button>
       </div>
     </div>
   </nav>
 
-  <main class="max-w-7xl mx-auto px-4 py-8 space-y-8">
+  <main class="max-w-7xl mx-auto px-4 py-6 md:py-10 space-y-8">
     
-    <!-- تبويب المواصفات (Specs Finder) -->
+    <!-- TABS CONTAINER 1: SPECS FINDER -->
     <div id="tab-specs" class="space-y-6">
-      <div class="text-center max-w-xl mx-auto">
-        <h1 class="text-2xl md:text-3xl font-extrabold mb-2">Find The Perfect Linux Distro For Your PC 💻</h1>
-        <p class="text-xs md:text-sm text-gray-400">Select your hardware specs to get instant recommendations.</p>
+      <div class="text-center max-w-xl mx-auto space-y-2">
+        <h1 class="text-2xl md:text-4xl font-extrabold tracking-tight bg-gradient-to-r from-white to-gray-400 bg-clip-text text-transparent">Distro Architecture Core 💻</h1>
+        <p class="text-xs md:text-sm text-gray-400">Specify your bare-metal setup to deploy the optimal kernel architecture.</p>
       </div>
 
-      <!-- تقسيم المساحات المتجاوب (هاتف ولابتوب) -->
-      <div class="main-container">
-        <!-- لوحة المدخلات -->
-        <div class="p-6 rounded-2xl border border-gray-800 bg-[#0f172a]/60 space-y-4 h-fit">
+      <!-- نظام المساحات الذكي (لابتوب: جانبين / هاتف: طولي متناسق) -->
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <!-- لوحة التحكم بالمدخلات -->
+        <div class="p-6 rounded-2xl border border-gray-800 bg-[#070b19]/60 space-y-4 h-fit">
           <div>
-            <label class="text-xs font-bold text-purple-400 block mb-2">RAM SIZE</label>
-            <select id="specs-ram" class="w-full p-2.5 rounded-xl bg-gray-900 border border-gray-700 text-sm text-white outline-none">
-              <option value="under-2GB">Under 2GB</option>
-              <option value="4GB" selected>4GB</option>
-              <option value="8GB">8GB</option>
-              <option value="16GB+">16GB+</option>
+            <label class="text-xs font-bold text-purple-400 tracking-wider block mb-2">RAM CAPACITY</label>
+            <select id="specs-ram" class="w-full p-3 rounded-xl bg-gray-950 border border-gray-800 text-sm text-white outline-none focus:border-purple-500">
+              <option value="under-2GB">Under 2GB (Legacy)</option>
+              <option value="4GB" selected>4GB (Standard)</option>
+              <option value="8GB">8GB (Performance)</option>
+              <option value="16GB+">16GB+ (Power User)</option>
             </select>
           </div>
           <div>
-            <label class="text-xs font-bold text-purple-400 block mb-2">EXPERIENCE</label>
-            <select id="specs-exp" class="w-full p-2.5 rounded-xl bg-gray-900 border border-gray-700 text-sm text-white outline-none">
-              <option value="Beginner">Beginner Friendly</option>
-              <option value="Advanced">Advanced User</option>
+            <label class="text-xs font-bold text-cyan-400 tracking-wider block mb-2">STORAGE MEDIA (القرص)</label>
+            <select id="specs-storage" class="w-full p-3 rounded-xl bg-gray-950 border border-gray-800 text-sm text-white outline-none focus:border-cyan-500">
+              <option value="SSD" selected>Solid State Drive (SSD)</option>
+              <option value="HDD">Mechanical Drive (HDD)</option>
             </select>
           </div>
-          <button onclick="analyzeSpecs()" class="w-full py-3 rounded-xl bg-purple-600 text-white font-bold text-sm shadow-lg hover:bg-purple-500 transition-all">Analyze Specs 📊</button>
+          <div>
+            <label class="text-xs font-bold text-indigo-400 tracking-wider block mb-2">USER EXPERIENCE</label>
+            <select id="specs-exp" class="w-full p-3 rounded-xl bg-gray-950 border border-gray-800 text-sm text-white outline-none focus:border-indigo-500">
+              <option value="Beginner">Beginner / GUI Preferred</option>
+              <option value="Advanced">Advanced / TTY Hardcore</option>
+            </select>
+          </div>
+          <button onclick="startHardwareScan()" class="w-full py-3.5 rounded-xl bg-gradient-to-r from-purple-600 to-indigo-600 text-white font-bold text-sm shadow-lg hover:from-purple-500 hover:to-indigo-500 transition-all active:scale-95">Compile Recommendation 📊</button>
         </div>
 
-        <!-- لوحة المخرجات والنتائج -->
-        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4" id="specs-output">
-          <div class="col-span-full text-center py-12 text-gray-500 text-sm border border-dashed border-gray-800 rounded-2xl bg-[#070b19]/30">
-            Select your specs and press the Analyze button to view results.
+        <!-- لوحة المخرجات المبتكرة (الساحرة) -->
+        <div class="md:col-span-2 space-y-4">
+          <!-- شريط الـ Diagnostic الفيك المثير للحماس -->
+          <div id="scan-loader" class="p-6 rounded-2xl border border-purple-500/30 bg-purple-950/10 space-y-3 hidden">
+            <div class="flex justify-between text-xs text-purple-400 font-mono">
+              <span id="scan-status">> Initializing probe...</span>
+              <span id="scan-percentage">0%</span>
+            </div>
+            <div class="w-full h-1.5 bg-gray-900 rounded-full overflow-hidden">
+              <div id="scan-bar" class="h-full bg-gradient-to-r from-purple-500 to-cyan-400 w-0 transition-all duration-100"></div>
+            </div>
+          </div>
+
+          <!-- الكروت الفعلية للنتائج -->
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4" id="specs-output">
+            <div class="col-span-full text-center py-16 text-gray-500 text-sm border border-dashed border-gray-800 rounded-2xl bg-[#070b19]/20">
+              Awaiting parameters execution. Click 'Compile Recommendation' to query the local database Matrix.
+            </div>
           </div>
         </div>
       </div>
     </div>
 
-    <!-- تبويب الاستخدام (Workflow Matcher) -->
+    <!-- TABS CONTAINER 2: WORKFLOW MATCHER -->
     <div id="tab-usecase" class="space-y-6 hidden">
-      <div class="text-center max-w-xl mx-auto">
-        <h1 class="text-2xl md:text-3xl font-extrabold mb-2">What Is Your Core Workflow? 💼</h1>
-        <p class="text-xs md:text-sm text-gray-400">Match your system with your actual daily tasks.</p>
+      <div class="text-center max-w-xl mx-auto space-y-2">
+        <h1 class="text-2xl md:text-3xl font-extrabold tracking-tight">Environmental Vector Alignment 💼</h1>
+        <p class="text-xs md:text-sm text-gray-400">Match your ecosystem with your continuous production pipelines.</p>
       </div>
 
-      <div class="main-container">
-        <div class="p-6 rounded-2xl border border-gray-800 bg-[#0f172a]/60 space-y-4 h-fit">
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div class="p-6 rounded-2xl border border-gray-800 bg-[#070b19]/60 space-y-4 h-fit">
           <div>
-            <label class="text-xs text-emerald-400 font-bold block mb-2">WORKLOAD TYPE</label>
-            <select id="uc-workload" class="w-full p-2.5 rounded-xl bg-gray-900 border border-gray-700 text-sm text-white outline-none">
-              <option value="Programming">Programming & Development</option>
-              <option value="Cyber Security">Cyber Security & Pentesting</option>
-              <option value="Gaming">Gaming & Steam</option>
-              <option value="General">General Daily Use</option>
+            <label class="text-xs text-emerald-400 font-bold tracking-wider block mb-2">TARGET WORKLOAD VECTOR</label>
+            <select id="uc-workload" class="w-full p-3 rounded-xl bg-gray-950 border border-gray-800 text-sm text-white outline-none focus:border-emerald-500">
+              <option value="Programming">Full-Stack Dev & Compilation</option>
+              <option value="Cyber Security">Cyber Security, Pentesting & Auditing</option>
+              <option value="Gaming">Pro Gaming & Wine/Proton Layering</option>
+              <option value="General">General SysOps & Micro Browsing</option>
             </select>
           </div>
-          <button onclick="analyzeUsecase()" class="w-full py-3 rounded-xl bg-emerald-600 text-white font-bold text-sm uppercase shadow-lg hover:bg-emerald-500 transition-all">Match Workflow ⚙️</button>
+          <button onclick="analyzeUsecase()" class="w-full py-3.5 rounded-xl bg-emerald-600 text-white font-bold text-sm shadow-lg hover:bg-emerald-500 transition-all active:scale-95">Link Environment ⚙️</button>
         </div>
 
-        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4" id="uc-output">
-          <div class="col-span-full text-center py-12 text-gray-500 text-sm border border-dashed border-gray-800 rounded-2xl bg-[#070b19]/30">
-            Select workload type to configure workspace cards.
+        <div class="md:col-span-2 grid grid-cols-1 sm:grid-cols-2 gap-4" id="uc-output">
+          <div class="col-span-full text-center py-16 text-gray-500 text-sm border border-dashed border-gray-800 rounded-2xl bg-[#070b19]/20">
+            Select workload environment and run the linker matrix.
           </div>
         </div>
       </div>
     </div>
 
-    <!-- تبويب الاستكشاف (Explore World) -->
+    <!-- TABS CONTAINER 3: HACKER TERMINAL -->
     <div id="tab-explore" class="space-y-6 hidden">
-      <section class="p-6 rounded-2xl border border-gray-800 bg-[#0f172a]/40 flex items-center gap-4">
-        <div class="text-3xl">👑</div>
-        <div>
-          <h3 class="font-bold text-lg">About Me: Nasreddine</h3>
-          <p class="text-xs text-gray-400 mt-1">Linux enthusiast passionate about helping people discover the perfect distro for their hardware constraints and privacy needs.</p>
+      <div class="max-w-3xl mx-auto rounded-2xl border border-gray-800 bg-gray-950 overflow-hidden shadow-2xl">
+        <div class="bg-[#0f172a] px-4 py-2 flex items-center gap-2 border-b border-gray-900">
+          <div class="w-3 h-3 rounded-full bg-red-500"></div>
+          <div class="w-3 h-3 rounded-full bg-yellow-500"></div>
+          <div class="w-3 h-3 rounded-full bg-green-500"></div>
+          <span class="text-xs text-gray-500 font-mono ml-2">nasreddine@arch-tank:~</span>
         </div>
-      </section>
+        <div class="p-4 font-mono text-xs md:text-sm text-emerald-400 space-y-2 min-h-[250px]">
+          <p class="text-gray-500">// Type 'help', 'neofetch', or 'clear' to play around</p>
+          <div id="terminal-history">
+            <p><span class="text-purple-400">guest@linuxfinder:~$</span> neofetch</p>
+            <p class="text-cyan-400">██████████████████  <span class="text-white font-bold">OS:</span> Linux Finder OS</p>
+            <p class="text-cyan-400">██████████████████  <span class="text-white font-bold">Host:</span> GitHub Pages Server</p>
+            <p class="text-cyan-400">██████████████████  <span class="text-white font-bold">Kernel:</span> Vanilla-JS-Strict-V3</p>
+            <p class="text-cyan-400">██████████████████  <span class="text-white font-bold">Uptime:</span> Realtime Fluidity</p>
+            <p class="text-cyan-400">██████████████████  <span class="text-white font-bold">Shell:</span> TailwindCSS Engine</p>
+            <p class="text-cyan-400">██████████████████  <span class="text-white font-bold">WM:</span> Mobile-Responsive-Grid</p>
+          </div>
+          <div class="flex items-center gap-2 pt-2">
+            <span class="text-purple-400">guest@linuxfinder:~$</span>
+            <input type="text" id="terminal-input" onkeydown="handleTerminal(event)" class="bg-transparent text-emerald-400 outline-none flex-1 border-none focus:ring-0 p-0" autofocus autocomplete="off">
+          </div>
+        </div>
+      </div>
     </div>
 
   </main>
 
-  <!-- النافذة المنبثقة (Modal) -->
-  <div id="verdict-modal" class="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm flex items-center justify-center p-4 hidden">
+  <!-- MODAL DIALOG MATRIX -->
+  <div id="verdict-modal" class="fixed inset-0 z-50 bg-black/85 backdrop-blur-sm flex items-center justify-center p-4 hidden">
     <div class="w-full max-w-md rounded-2xl p-6 border border-gray-800 bg-gray-950 relative shadow-2xl">
-      <button onclick="closeModal()" class="absolute right-4 top-4 text-gray-400 hover:text-white p-1 text-lg">✕</button>
-      <h3 class="text-lg font-bold text-purple-400 mb-2" id="modal-title">Verdict</h3>
-      <p class="text-xs md:text-sm text-gray-300 leading-relaxed" id="modal-body"></p>
+      <button onclick="closeModal()" class="absolute right-4 top-4 text-gray-400 hover:text-white p-1 text-base">✕</button>
+      <h3 class="text-lg font-bold text-purple-400 mb-2" id="modal-title">System Analysis</h3>
+      <p class="text-xs md:text-sm text-gray-300 leading-relaxed font-mono" id="modal-body"></p>
     </div>
   </div>
 
-  <footer class="border-t border-gray-900 py-6 text-center text-xs text-gray-600">
-    Linux Finder — Managed by <span class="text-yellow-500 font-bold">Nasreddine 👑</span>
+  <footer class="border-t border-gray-900 py-6 text-center text-[11px] text-gray-600 font-mono">
+    [SysOS Engine V3] — Maintainer: <span class="text-yellow-500 font-bold">Nasreddine 👑</span>
   </footer>
 
   <script>
-    // قاعدة البيانات المبسطة والسريعة
+    // قاعدة البيانات الشاملة التي تأخذ بالحسبان نوع القرص وحجم الذاكرة
     const DATA = [
-      { id: "mint", name: "Linux Mint", desc: "Perfect for beginners switching from Windows. Familiar UI and very stable.", bg: "from-emerald-600 to-green-500", why: "Excellent choice for 4GB/8GB RAM setups looking for maximum simplicity and zero terminal setup." },
-      { id: "ubuntu", name: "Ubuntu Linux", desc: "The industry standard for developers and programming workflows globally.", bg: "from-orange-600 to-amber-500", why: "Great for modern web development, docker, and standard coding tasks with massive community help." },
-      { id: "arch", name: "Arch Linux", desc: "Bleeding-edge rolling release distribution made for full DIY customizability.", bg: "from-cyan-600 to-blue-500", why: "Because you want complete control over every single package, ultra-lightweight performance, and access to the AUR." },
-      { id: "fedora", name: "Fedora Workstation", desc: "Rock-solid, cutting-edge open source technology favored by engineers.", bg: "from-indigo-600 to-blue-500", why: "The perfect balance between bleeding-edge software and enterprise-grade system stability." },
-      { id: "lubuntu", name: "Lubuntu", desc: "Featherweight distribution designed to bring old or low-RAM computers back to life.", bg: "from-sky-700 to-blue-600", why: "It uses almost no system resources, making it run perfectly on machines with limited hardware specs." },
-      { id: "kali", name: "Kali Linux", desc: "The ultimate advanced platform pre-packed with tools for penetration testing.", bg: "from-slate-700 to-cyan-800", why: "Specifically designed for network auditing, security research, and penetration testing workflows." },
-      { id: "manjaro", name: "Manjaro Linux", desc: "An easy-to-use distribution based on Arch Linux with a graphical installer.", bg: "from-emerald-700 to-teal-600", why: "Gives you all the power and speed of Arch and AUR packages, but with pre-configured desktop simplicity." }
+      { id: "mint", name: "Linux Mint", desc: "Highly optimized for HDDs/SSDs. Perfect Windows transition UI layer.", bg: "from-emerald-600 to-green-500", why: "Because your combination of 4GB RAM runs incredibly stable on Mint's traditional light desktop environment layout." },
+      { id: "ubuntu", name: "Ubuntu Linux", desc: "The definitive cloud and production architecture for standard setups.", bg: "from-orange-600 to-amber-500", why: "Your modern SSD storage paired with high capacity RAM will make Ubuntu's GNOME shell fly flawlessly." },
+      { id: "arch", name: "Arch Linux", desc: "Pure rolling-release deployment. Absolute full bare-metal control.", bg: "from-cyan-600 to-blue-500", why: "Because you are an Advanced user with a fast storage drive. Arch bypasses pre-installed bloatware completely." },
+      { id: "fedora", name: "Fedora Workstation", desc: "The bleeding edge of upstream kernel development. Flatpak ecosystem.", bg: "from-indigo-600 to-blue-500", why: "Excellent if you have a fast SSD and 8GB+ RAM. Fedora runs pristine vanilla configurations for software engineering." },
+      { id: "lubuntu", name: "Lubuntu (LXQt)", desc: "Ultra-featherweight kernel framework to revive older mechanical drives.", bg: "from-sky-700 to-blue-600", why: "Essential because your machine is resource-constrained. Lubuntu cuts RAM consumption down to ~300MB." },
+      { id: "kali", name: "Kali Linux", desc: "Advanced security platform auditing suite tailored for local threat analysis.", bg: "from-slate-700 to-cyan-800", why: "Deploys an extensive pre-packaged offensive arsenal, highly productive on SSD environments." },
+      { id: "manjaro", name: "Manjaro Linux", desc: "Arch ecosystem agility combined with automated binary package setups.", bg: "from-emerald-700 to-teal-600", why: "Allows advanced scaling and access to the Arch User Repository (AUR) without manual bootstrap script installations." },
+      { id: "lite", name: "Linux Lite", desc: "Specifically tuned to run smoothly on legacy internal rotational mechanical HDDs.", bg: "from-gray-700 to-gray-600", why: "Your combination of HDD storage and low hardware profile means Linux Lite is the best to prevent disk bottlenecks." }
     ];
 
-    // دالة تبديل التبويبات (Tabs)
     function switchTab(tabId) {
       document.getElementById('tab-specs').classList.add('hidden');
       document.getElementById('tab-usecase').classList.add('hidden');
       document.getElementById('tab-explore').classList.add('hidden');
       
-      document.getElementById('btn-specs').className = "px-3 py-1.5 rounded-lg text-gray-400 font-semibold hover:text-white";
-      document.getElementById('btn-usecase').className = "px-3 py-1.5 rounded-lg text-gray-400 font-semibold hover:text-white";
-      document.getElementById('btn-explore').className = "px-3 py-1.5 rounded-lg text-gray-400 font-semibold hover:text-white";
+      document.getElementById('btn-specs').className = "px-3 py-2 rounded-xl text-gray-400 font-semibold hover:text-white transition-all";
+      document.getElementById('btn-usecase').className = "px-3 py-2 rounded-xl text-gray-400 font-semibold hover:text-white transition-all";
+      document.getElementById('btn-explore').className = "px-3 py-2 rounded-xl text-gray-400 font-semibold hover:text-white transition-all";
 
       document.getElementById('tab-' + tabId).classList.remove('hidden');
-      document.getElementById('btn-' + tabId).className = "px-3 py-1.5 rounded-lg bg-purple-600 text-white font-semibold";
+      document.getElementById('btn-' + tabId).className = "px-3 py-2 rounded-xl bg-purple-600 text-white font-semibold transition-all";
     }
 
-    // دالة تحليل المواصفات (Specs Analysis)
-    function analyzeSpecs() {
+    // خدعة التحميل البصري الساحر
+    function startHardwareScan() {
+      const loader = document.getElementById('scan-loader');
+      const bar = document.getElementById('scan-bar');
+      const percentage = document.getElementById('scan-percentage');
+      const status = document.getElementById('scan-status');
+      
+      loader.classList.remove('hidden');
+      document.getElementById('specs-output').innerHTML = ''; // تفريغ مؤقت
+      
+      let progress = 0;
+      const statusPhrases = [
+        "> Probing CPU architecture standard registers...",
+        "> Measuring storage sector write/read latencies...",
+        "> Checking memory addressing allocation matrices...",
+        "> Resolving hardware compliance constraints...",
+        "> Compiling final recommendation payload..."
+      ];
+
+      const interval = setInterval(() => {
+        progress += 4;
+        bar.style.width = progress + '%';
+        percentage.innerText = progress + '%';
+        
+        if (progress % 20 === 0) {
+          status.innerText = statusPhrases[Math.floor(progress / 20) - 1] || statusPhrases[4];
+        }
+
+        if (progress >= 100) {
+          clearInterval(interval);
+          setTimeout(() => {
+            loader.classList.add('hidden');
+            executeHardwareAnalysis(); // إظهار الكروت الحقيقية بعد انتهاء الخدعة البصرية
+          }, 400);
+        }
+      }, 50);
+    }
+
+    // معالجة المدخلات بما فيها الـ SSD و الـ HDD بدقة رياضية وبرمجية
+    function executeHardwareAnalysis() {
       const ram = document.getElementById('specs-ram').value;
+      const storage = document.getElementById('specs-storage').value;
       const exp = document.getElementById('specs-exp').value;
       let results = [];
 
       if (ram === 'under-2GB') {
-        results = DATA.filter(d => d.id === 'lubuntu');
+        results = storage === 'HDD' ? DATA.filter(d => d.id === 'lite') : DATA.filter(d => d.id === 'lubuntu');
       } else if (ram === '4GB') {
-        results = exp === 'Beginner' ? DATA.filter(d => d.id === 'mint') : DATA.filter(d => d.id === 'manjaro');
-      } else {
-        results = exp === 'Beginner' ? DATA.filter(d => d.id === 'ubuntu' || d.id === 'fedora') : DATA.filter(d => d.id === 'arch' || d.id === 'fedora');
+        if (storage === 'HDD') {
+          results = DATA.filter(d => d.id === 'lite' || d.id === 'mint');
+        } else {
+          results = exp === 'Beginner' ? DATA.filter(d => d.id === 'mint') : DATA.filter(d => d.id === 'manjaro');
+        }
+      } else { // 8GB & 16GB+
+        if (exp === 'Advanced') {
+          results = DATA.filter(d => d.id === 'arch' || d.id === 'fedora');
+        } else {
+          results = storage === 'HDD' ? DATA.filter(d => d.id === 'mint' || d.id === 'ubuntu') : DATA.filter(d => d.id === 'ubuntu' || d.id === 'fedora');
+        }
       }
 
       const container = document.getElementById('specs-output');
       container.innerHTML = results.map(d => `
-        <div class="p-5 rounded-xl border border-gray-800 bg-gray-900/30 flex flex-col justify-between shadow-md">
+        <div class="p-5 rounded-xl border border-gray-800 bg-[#070b19]/40 flex flex-col justify-between shadow-lg hover:border-purple-500/40 transition-all group">
           <div>
-            <span class="px-2.5 py-1 rounded text-xs font-bold text-white bg-gradient-to-r ${d.bg}">${d.name}</span>
-            <p class="text-xs text-gray-400 mt-3 leading-relaxed">${d.desc}</p>
+            <span class="px-2.5 py-1 rounded-lg text-xs font-bold text-white bg-gradient-to-r ${d.bg} tracking-wide">${d.name}</span>
+            <p class="text-xs text-gray-400 mt-4 leading-relaxed font-mono">${d.desc}</p>
           </div>
-          <button onclick="showModal('${d.name}', '${d.why}')" class="mt-4 w-full py-2 rounded-lg bg-purple-500/10 text-purple-400 text-xs font-bold hover:bg-purple-500/20 transition-all">Why this distro? 💡</button>
+          <button onclick="showModal('${d.name}', '${d.why}')" class="mt-4 w-full py-2.5 rounded-lg bg-purple-500/10 text-purple-400 text-xs font-bold hover:bg-purple-500/20 transition-all border border-purple-500/20 group-hover:border-purple-500/40">Query Diagnosis Module 💡</button>
         </div>
       `).join('');
     }
 
-    // دالة تحليل الاستخدام (Workflow Analysis)
     function analyzeUsecase() {
       const workload = document.getElementById('uc-workload').value;
       let results = [];
 
       if (workload === 'Cyber Security') results = DATA.filter(d => d.id === 'kali');
       else if (workload === 'Programming') results = DATA.filter(d => d.id === 'ubuntu' || d.id === 'fedora' || d.id === 'arch');
-      else if (workload === 'Gaming') results = DATA.filter(d => d.id === 'manjaro' || d.id === 'ubuntu');
+      else if (workload === 'Gaming') results = DATA.filter(d => d.id === 'manjaro');
       else results = DATA.filter(d => d.id === 'mint');
 
       const container = document.getElementById('uc-output');
       container.innerHTML = results.map(d => `
-        <div class="p-5 rounded-xl border border-gray-800 bg-gray-900/40 flex flex-col justify-between">
+        <div class="p-5 rounded-xl border border-gray-800 bg-[#070b19]/40 flex flex-col justify-between hover:border-emerald-500/30 transition-all">
           <div>
-            <span class="px-2.5 py-1 rounded text-xs font-bold text-white bg-gradient-to-r ${d.bg}">${d.name}</span>
-            <p class="text-xs text-gray-400 mt-2 leading-relaxed">${d.desc}</p>
+            <span class="px-2.5 py-1 rounded-lg text-xs font-bold text-white bg-gradient-to-r ${d.bg}">${d.name}</span>
+            <p class="text-xs text-gray-400 mt-3 leading-relaxed font-mono">${d.desc}</p>
           </div>
-          <div class="mt-3 pt-3 border-t border-gray-800/40 text-[11px] text-purple-400 font-semibold">
-            Recommended Environment Setup
+          <div class="mt-4 pt-3 border-t border-gray-800/60 text-[11px] text-emerald-400 font-mono flex items-center justify-between">
+            <span>[Link status: Secure]</span>
+            <span>Target: ${workload}</span>
           </div>
         </div>
       `).join('');
     }
 
-    // التحكم في الـ Modals المنبثقة
+    // محاكي التيرمينال الحقيقي لزيادة الهيبة للموقع!
+    function handleTerminal(e) {
+      if (e.key === 'Enter') {
+        const input = document.getElementById('terminal-input');
+        const cmd = input.value.toLowerCase().trim();
+        const history = document.getElementById('terminal-history');
+        
+        let reply = '';
+        if (cmd === 'help') {
+          reply = `<p class="text-gray-400">Available cores: 'neofetch' | 'clear' | 'sudo rm -rf' | 'whoami'</p>`;
+        } else if (cmd === 'neofetch') {
+          reply = `
+            <p class="text-cyan-400">██████████████████  <span class="text-white font-bold">OS:</span> Linux Finder OS</p>
+            <p class="text-cyan-400">██████████████████  <span class="text-white font-bold">Host:</span> GitHub Pages Server</p>
+            <p class="text-cyan-400">██████████████████  <span class="text-white font-bold">Maintainer:</span> Nasreddine 👑</p>
+          `;
+        } else if (cmd === 'sudo rm -rf') {
+          reply = `<p class="text-red-400">Permission denied. Nice try, hacker boy! 😉</p>`;
+        } else if (cmd === 'whoami') {
+          reply = `<p class="text-purple-400">An elite user exploring Nasreddine's masterwork portfolio.</p>`;
+        } else if (cmd === 'clear') {
+          history.innerHTML = '';
+          input.value = '';
+          return;
+        } else if (cmd !== '') {
+          reply = `<p class="text-red-500">Command not found: ${cmd}. Type 'help' for options.</p>`;
+        }
+        
+        if (cmd !== '') {
+          history.innerHTML += `<p><span class="text-purple-400">guest@linuxfinder:~$</span> ${input.value}</p>${reply}`;
+        }
+        input.value = '';
+      }
+    }
+
     function showModal(title, body) {
-      document.getElementById('modal-title').innerText = title + " Verdict";
+      document.getElementById('modal-title').innerText = title + " Log Verdict";
       document.getElementById('modal-body').innerText = body;
-      document.getElementById('verdict-modal').classList.remove('hidden');
-    }
-    function closeModal() {
-      document.getElementById('verdict-modal').classList.add('hidden');
-    }
-  </script>
-</body>
-</html>
+      document.getE
