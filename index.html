@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Linux Finder - Nasreddine</title>
+  <!-- تحميل Tailwind CSS والخطوط والمكتبات مباشرة -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://unpkg.com/react@18/umd/react.production.min.js" crossorigin></script>
+  <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js" crossorigin></script>
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+  <style>
+    body { font-family: 'Plus Jakarta Sans', sans-serif; }
+    .font-space { font-family: 'Space Grotesk', sans-serif; }
+  </style>
+</head>
+<body>
+  <div id="root"></div>
+
+  <!-- كود موقعك تفاعلي بالكامل ويعمل مباشرة بالمتصفح -->
+  <script type="text/babel">
+    const DISTROS_DATABASE = [
+      { id: "mint", name: "Linux Mint", difficulty: "Easy", difficultyScore: 1, resources: "Medium", resourceScore: 2, base: "Debian/Ubuntu", bestFor: "General Daily Use & Beginners", description: "The absolute gold standard for beginners transitioning from Windows. Highly familiar desktop layout and rock-solid stability.", features: ["Windows-like layout", "Massive community support"], iconBg: "from-emerald-600 to-green-500", whyThis: "Because your device has enough resources to run a highly polished modern layout with zero headache." },
+      { id: "ubuntu", name: "Ubuntu", difficulty: "Easy", difficultyScore: 2, resources: "Medium-High", resourceScore: 3, base: "Debian", bestFor: "Programming & Everyday Use", description: "The world's most popular Linux distribution. Widely used by enterprise developers and industry standards.", features: ["Industry standard", "Maximum software availability"], iconBg: "from-orange-600 to-amber-500", whyThis: "Because Ubuntu provides the absolute best environment for standard modern programming workflows." },
+      { id: "arch", name: "Arch Linux", difficulty: "Expert", difficultyScore: 5, resources: "Ultra-Light", resourceScore: 1, base: "Independent", bestFor: "Advanced Customization", description: "A lightweight, rolling-release distribution designed for users who want complete DIY control and bleeding-edge software.", features: ["Bleeding-edge software", "Pacman + AUR package manager"], iconBg: "from-cyan-600 to-blue-500", whyThis: "Because you want pure performance, complete customizability, and full control over every single package." },
+      { id: "fedora", name: "Fedora Workstation", difficulty: "Medium", difficultyScore: 3, resources: "Medium", resourceScore: 3, base: "Red Hat", bestFor: "Software Engineers", description: "Backed by Red Hat, Fedora is the pioneer of cutting-edge open source technology. Clean and rock solid.", features: ["Pioneering security", "Pure GNOME desktop"], iconBg: "from-indigo-600 to-blue-500", whyThis: "Because you have solid modern specs and want a polished platform that professional engineers globally respect." },
+      { id: "zorin", name: "Zorin OS", difficulty: "Easy", difficultyScore: 1, resources: "Medium", resourceScore: 3, base: "Debian/Ubuntu", bestFor: "Windows Switchers", description: "An incredibly elegant operating system designed to make your computer faster and beautiful.", features: ["Stunning modern design", "Premium feel"], iconBg: "from-blue-600 to-teal-500", whyThis: "Because you want an interface that feels like a luxury modern desktop while remaining extremely easy to use." },
+      { id: "manjaro", name: "Manjaro", difficulty: "Medium", difficultyScore: 3, resources: "Medium", resourceScore: 2, base: "Arch-based", bestFor: "Gaming & Arch Power Easy", description: "Manjaro provides all the speed and AUR access of Arch Linux but wrapped inside an intuitive graphical installer.", features: ["Access to AUR", "Steam preloaded options"], iconBg: "from-emerald-700 to-teal-600", whyThis: "Because you want the extreme speeds of Arch-based systems and AUR packages, without the terminal setup headache." },
+      { id: "lubuntu", name: "Lubuntu", difficulty: "Easy", difficultyScore: 1, resources: "Featherweight", resourceScore: 1, base: "Debian/Ubuntu", bestFor: "Resurrecting Weak PCs", description: "An official sub-flavor of Ubuntu utilizing the LXQt desktop. It consumes barely 200-300MB of RAM upon booting.", features: ["Mindblowing RAM savings", "Runs on ancient CPUs"], iconBg: "from-sky-700 to-blue-600", whyThis: "Because your machine has low RAM constraints. Lubuntu will keep your PC running at high speeds." },
+      { id: "kali", name: "Kali Linux", difficulty: "Advanced", difficultyScore: 4, resources: "Medium", resourceScore: 3, base: "Debian-based", bestFor: "Cyber Security & Hacking", description: "The industry standard for penetration testing and digital forensics. Packed with hundreds of security tools.", features: ["Built-in penetration tools", "Optimized security kernel"], iconBg: "from-slate-700 to-cyan-800", whyThis: "Because you work in Cyber Security. Kali is the specialized workspace that saves you time configuring advanced tools." },
+      { id: "parrot", name: "Parrot OS", difficulty: "Advanced", difficultyScore: 3, resources: "Lightweight", resourceScore: 2, base: "Debian-based", bestFor: "Cyber Security on Low Specs", description: "A cloud-oriented security operating system designed for pentesting and privacy. Much lighter than Kali.", features: ["Lightweight security suite", "Anonymity routing integrations"], iconBg: "from-teal-800 to-sky-700", whyThis: "Because you need a security workstation that respects your hardware and runs smoothly on lower RAM." },
+      { id: "ustudio", name: "Ubuntu Studio", difficulty: "Medium", difficultyScore: 2, resources: "Heavy", resourceScore: 4, base: "Debian/Ubuntu", bestFor: "Video & Audio Editing", description: "The definitive multimedia workstation. Equipped with a low-latency kernel and pre-installed creative apps.", features: ["Low-latency audio kernel", "Pre-installed editor tools"], iconBg: "from-purple-800 to-indigo-700", whyThis: "Because digital creation and video editing require tailored kernel configurations and heavy out-of-the-box support." },
+      { id: "lite", name: "Linux Lite", difficulty: "Easy", difficultyScore: 1, resources: "Very Light", resourceScore: 1, base: "Debian/Ubuntu", bestFor: "Super Old Hardware", description: "Designed specifically to make the transition from Windows painless while running on ancient machines.", features: ["Windows-style layout", "Very light memory usage"], iconBg: "from-gray-700 to-gray-600", whyThis: "Because you have limited resources (under 2GB RAM / HDD) and prefer a simple, responsive setup without lag." }
+    ];
+
+    function App() {
+      const [theme, setTheme] = React.useState('dark');
+      const [activeTab, setActiveTab] = React.useState('specs');
+      const [searchQuery, setSearchQuery] = React.useState('');
+      const [specsRam, setSpecsRam] = React.useState('4GB');
+      const [specsStorage, setSpecsStorage] = React.useState('SSD');
+      const [specsExperience, setSpecsExperience] = React.useState('Beginner');
+      const [specsResults, setSpecsResults] = React.useState(null);
+      const [selectedWhyDistro, setSelectedWhyDistro] = React.useState(null);
+      const [ucWorkload, setUcWorkload] = React.useState('Programming');
+      const [ucRam, setUcRam] = React.useState('8GB');
+      const [ucStorage, setUcStorage] = React.useState('SSD');
+      const [ucPreference, setUcPreference] = React.useState('Easy');
+      const [ucResults, setUcResults] = React.useState(null);
+      const [reviews, setReviews] = React.useState([
+        { name: "Samy K.", rating: 5, comment: "Helped me choose my first Linux distro! The recommendations are spot on.", date: "May 2026" },
+        { name: "Sarah A.", rating: 5, comment: "Very clean and useful website. The UI design is amazing!", date: "April 2026" }
+      ]);
+      const [newName, setNewName] = React.useState('');
+      const [newComment, setNewComment] = React.useState('');
+
+      const handleSpecsAnalysis = () => {
+        let res = [];
+        if (specsRam === 'under-2GB') res = DISTROS_DATABASE.filter(d => d.id === 'lubuntu' || d.id === 'lite');
+        else if (specsRam === '4GB') res = specsExperience === 'Beginner' ? DISTROS_DATABASE.filter(d => d.id === 'mint' || d.id === 'zorin') : DISTROS_DATABASE.filter(d => d.id === 'manjaro' || d.id === 'fedora');
+        else res = specsExperience === 'Beginner' ? DISTROS_DATABASE.filter(d => d.id === 'ubuntu' || d.id === 'mint') : DISTROS_DATABASE.filter(d => d.id === 'arch' || d.id === 'fedora');
+        setSpecsResults(res);
+      };
+
+      const handleUsecaseAnalysis = () => {
+        let res = [];
+        if (ucWorkload === 'Cyber Security') res = (ucRam === 'under-2GB' || ucStorage === 'HDD') ? DISTROS_DATABASE.filter(d => d.id === 'parrot') : DISTROS_DATABASE.filter(d => d.id === 'kali' || d.id === 'parrot');
+        else if (ucWorkload === 'Video Editing & Photography') res = DISTROS_DATABASE.filter(d => d.id === 'ustudio');
+        else if (ucWorkload === 'Programming') res = ucPreference === 'Advanced' ? DISTROS_DATABASE.filter(d => d.id === 'arch' || d.id === 'fedora') : DISTROS_DATABASE.filter(d => d.id === 'ubuntu' || d.id === 'fedora');
+        else if (ucWorkload === 'Gaming') res = DISTROS_DATABASE.filter(d => d.id === 'manjaro' || d.id === 'ubuntu');
+        else res = ucRam === 'under-2GB' ? DISTROS_DATABASE.filter(d => d.id === 'lubuntu' || d.id === 'lite') : DISTROS_DATABASE.filter(d => d.id === 'mint' || d.id === 'zorin');
+        setUcResults(res);
+      };
+
+      const filteredDistros = React.useMemo(() => {
+        if (!searchQuery.trim()) return [];
+        return DISTROS_DATABASE.filter(d => d.name.toLowerCase().includes(searchQuery.toLowerCase()) || d.bestFor.toLowerCase().includes(searchQuery.toLowerCase()));
+      }, [searchQuery]);
+
+      return (
+        <div className={`min-h-screen transition-colors duration-300 ${theme === 'dark' ? 'bg-[#030712] text-gray-100' : 'bg-slate-50 text-slate-800'}`}>
+          <nav className={`sticky top-0 z-50 backdrop-blur-md border-b ${theme === 'dark' ? 'bg-[#030712]/80 border-gray-800' : 'bg-white/80 border-slate-200'}`}>
+            <div className="max-w-7xl mx-auto px-4 h-16 flex items-center justify-between">
+              <div className="flex items-center gap-2">
+                <span className="text-2xl">🐧</span>
+                <span className="font-space text-xl font-black tracking-tight bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-purple-500">Linux Finder</span>
+              </div>
+              <div className="hidden md:flex items-center gap-2">
+                <button onClick={() => setActiveTab('specs')} className={`px-4 py-2 rounded-xl text-sm font-semibold ${activeTab === 'specs' ? 'bg-purple-600 text-white' : 'text-gray-400'}`}>🖥️ Specs Finder</button>
+                <button onClick={() => setActiveTab('usecase')} className={`px-4 py-2 rounded-xl text-sm font-semibold ${activeTab === 'usecase' ? 'bg-purple-600 text-white' : 'text-gray-400'}`}>💼 Workflow Matcher</button>
+                <button onClick={() => setActiveTab('explore')} className={`px-4 py-2 rounded-xl text-sm font-semibold ${activeTab === 'explore' ? 'bg-purple-600 text-white' : 'text-gray-400'}`}>🌍 Explore World</button>
+              </div>
+              <button onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')} className="p-2 rounded-xl border border-gray-800">{theme === 'dark' ? '☀️' : '🌙'}</button>
+            </div>
+          </nav>
+
+          <main className="max-w-7xl mx-auto px-4 py-10 space-y-12">
+            {/* لوحة البحث */}
+            <section className={`rounded-3xl p-6 border ${theme === 'dark' ? 'bg-gray-950/40 border-gray-800' : 'bg-white border-slate-200 shadow-sm'}`}>
+              <div className="max-w-xl mx-auto text-center space-y-3">
+                <h3 className="text-xl font-bold">Looking for a Specific Distribution? 🔍</h3>
+                <input type="text" placeholder="Type 'Ubuntu', 'Arch', 'Mint'..." value={searchQuery} onChange={(e) => setSearchQuery(e.target.value)} className="w-full py-2.5 px-4 rounded-xl border bg-transparent text-center outline-none border-gray-700 focus:border-purple-500"/>
+              </div>
+              {searchQuery.trim() && (
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mt-6">
+                  {filteredDistros.map(d => (
+                    <div key={d.id} className="p-4 rounded-xl border border-gray-800 bg-gray-900/50">
+                      <h4 className="font-bold text-purple-400">{d.name}</h4>
+                      <p className="text-xs text-gray-400 mt-1">{d.bestFor}</p>
+                    </div>
+                  ))}
+                </div>
+              )}
+            </section>
+
+            {/* محرك البحث بالمواصفات */}
+            {activeTab === 'specs' && (
+              <div className="space-y-8">
+                <div className="text-center max-w-2xl mx-auto">
+                  <h1 className="text-3xl font-extrabold font-space mb-2">Find The Perfect Linux Distro For Your PC 💻</h1>
+                  <p className="text-sm text-gray-400">Answer a few questions and we'll recommend the best Linux distribution for your hardware.</p>
+                </div>
+                <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                  <div className={`p-6 rounded-3xl border space-y-6 ${theme === 'dark' ? 'bg-gray-950/60 border-gray-800' : 'bg-white border-slate-200'}`}>
+                    <div>
+                      <label className="text-xs font-bold text-purple-400 block mb-2">RAM SIZE</label>
+                      <select value={specsRam} onChange={(e) => setSpecsRam(e.target.value)} className="w-full p-2.5 rounded-xl bg-transparent border border-gray-700 text-sm">
+                        <option value="under-2GB">Under 2GB</option><option value="4GB">4GB</option><option value="8GB">8GB</option><option value="16GB+">16GB+</option>
+                      </select>
+                    </div>
+                    <div>
+                      <label className="text-xs font-bold text-purple-400 block mb-2">STORAGE TYPE</label>
+                      <select value={specsStorage} onChange={(e) => setSpecsStorage(e.target.value)} className="w-full p-2.5 rounded-xl bg-transparent border border-gray-700 text-sm">
+                        <option value="SSD">SSD</option><option value="HDD">HDD</option>
+                      </select>
+                    </div>
+                    <div>
+                      <label className="text-xs font-bold text-purple-400 block mb-2">EXPERIENCE</label>
+                      <select value={specsExperience} onChange={(e) => setSpecsExperience(e.target.value)} className="w-full p-2.5 rounded-xl bg-transparent border border-gray-700 text-sm">
+                        <option value="Beginner">Beginner Friendly</option><option value="Advanced">Advanced User</option>
+                      </select>
+                    </div>
+                    <button onClick={handleSpecsAnalysis} className="w-full py-3 rounded-xl bg-purple-600 text-white font-bold text-sm shadow-lg hover:bg-purple-500">Analyze Specs 📊</button>
+                  </div>
+                  <div className="lg:col-span-2 grid grid-cols-1 md:grid-cols-2 gap-4">
+                    {specsResults ? specsResults.map(d => (
+                      <div key={d.id} className="p-5 rounded-2xl border border-gray-800 bg-gray-900/20 flex flex-col justify-between">
+                        <div>
+                          <span className={`px-2.5 py-0.5 rounded text-xs font-bold text-white bg-gradient-to-r ${d.iconBg}`}>{d.name}</span>
+                          <p className="text-xs text-gray-400 mt-3 leading-relaxed">{d.description}</p>
+                        </div>
+                        <button onClick={() => setSelectedWhyDistro(d)} className="mt-4 w-full py-1.5 rounded-lg bg-purple-500/10 text-purple-400 text-xs font-bold">Why this distro? 💡</button>
+                      </div>
+                    )) : <div className="col-span-2 text-center py-12 text-gray-500 text-sm">Fill parameters and press Analyze.</div>}
+                  </div>
+                </div>
+              </div>
+            )}
+
+            {/* محرك البحث بالاستخدام */}
+            {activeTab === 'usecase' && (
+              <div className="space-y-8">
+                <div className="text-center max-w-2xl mx-auto">
+                  <h1 className="text-3xl font-extrabold font-space mb-2">What Do You Use Your Computer For? 💼</h1>
+                  <p className="text-sm text-gray-400">Select your workflow fields to unlock the tailored pre-installed toolsets.</p>
+                </div>
+                <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                  <div className="p-6 rounded-3xl border border-gray-800 bg-gray-950/60 space-y-4">
+                    <div>
+                      <label className="text-xs text-emerald-400 font-bold block mb-1">WORKLOAD</label>
+                      <select value={ucWorkload} onChange={(e) => setUcWorkload(e.target.value)} className="w-full p-2 rounded-xl bg-transparent border border-gray-700 text-xs">
+                        <option value="Programming">Programming</option><option value="Browsing">Browsing</option><option value="Video Editing & Photography">Video Editing & Photography</option><option value="Cyber Security">Cyber Security</option><option value="Gaming">Gaming</option><option value="General Daily Use">General Daily Use</option>
+                      </select>
+                    </div>
+                    <button onClick={handleUsecaseAnalysis} className="w-full py-2.5 rounded-xl bg-emerald-600 text-white font-bold text-xs uppercase shadow-lg">Build Environment ⚙️</button>
+                  </div>
+                  <div className="lg:col-span-2 grid grid-cols-1 md:grid-cols-2 gap-4">
+                    {ucResults ? ucResults.map(d => (
+                      <div key={d.id} className="p-5 rounded-2xl border border-gray-800 bg-gray-900/30">
+                        <span className={`px-2 py-0.5 rounded text-xs font-bold text-white bg-gradient-to-r ${d.iconBg}`}>{d.name}</span>
+                        <p className="text-xs text-gray-400 mt-2">{d.description}</p>
+                        <div className="mt-3 pt-3 border-t border-gray-800/40 flex justify-between text-[11px] text-gray-500">
+                          <span>Difficulty: {d.difficulty}</span>
+                          <span>Target: {d.bestFor}</span>
+                        </div>
+                      </div>
+                    )) : <div className="col-span-2 text-center py-12 text-gray-500 text-sm">Select workload type to configure workspace cards.</div>}
+                  </div>
+                </div>
+              </div>
+            )}
+
+            {/* عالم لينكس وقسم التعليقات */}
+            {activeTab === 'explore' && (
+              <div className="space-y-12">
+                <section className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                  <div className="p-5 rounded-2xl border border-rose-500/20 bg-rose-950/5"><h4 className="font-bold text-sm">Debian-based</h4><p className="text-xs text-gray-400 mt-1">Rock solid reliability. Built for general everyday stability.</p></div>
+                  <div className="p-5 rounded-2xl border border-cyan-500/20 bg-cyan-950/5"><h4 className="font-bold text-sm">Arch-based</h4><p className="text-xs text-gray-400 mt-1">Rolling releases. Supreme customizability and DIY code setup.</p></div>
+                  <div className="p-5 rounded-2xl border border-indigo-500/20 bg-indigo-950/5"><h4 classNam
